@@ -3,7 +3,7 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 
-	public GameObject archer;
+	private GameObject player;
 	private bool clicked = false;
 
 	#region singleton
@@ -30,11 +30,12 @@ public class InputManager : MonoBehaviour {
 	void Update () {
 
 		if (Input.GetMouseButton(0))
-		{	Debug.Log(archer);
-			archer = GetClickedGameObject();
-			if (archer != null )
+		{	
+			player = GetClickedGameObject();
+			if (player != null && player.tag == "Player")
 				clicked = true;
 		}
+
 		if (clicked)
 			OnMouseDrag();
 
@@ -48,7 +49,7 @@ public class InputManager : MonoBehaviour {
 		
 		point.z = 0;
 
-		archer.transform.position = point;
+		player.transform.position = point;
 	}
 
 	GameObject GetClickedGameObject()
@@ -61,7 +62,7 @@ public class InputManager : MonoBehaviour {
 		RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
 		if (hit.collider != null)
-		{	Debug.Log(hit.transform.gameObject);
+		{	
 			return hit.transform.gameObject;
 		}
 		else
