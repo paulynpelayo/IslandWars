@@ -29,14 +29,14 @@ public class InputManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.GetMouseButton(0))
+		if (Input.GetMouseButtonDown(0))
 		{	
 			player = GetClickedGameObject();
-			if (player != null && player.tag == "Player")
+			if (player != null)
 				clicked = true;
 		}
 
-		if (clicked)
+		if (clicked  && player.tag == "Player")
 			OnMouseDrag();
 
 		if (Input.GetButtonUp("Fire1"))
