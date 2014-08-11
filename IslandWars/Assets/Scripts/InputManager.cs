@@ -32,11 +32,11 @@ public class InputManager : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0))
 		{	
 			player = GetClickedGameObject();
-			if (player != null)
+			if (player != null && player.tag == "Player")
 				clicked = true;
 		}
 
-		if (clicked  && player.tag == "Player")
+		if (clicked)
 			OnMouseDrag();
 
 		if (Input.GetButtonUp("Fire1"))
@@ -55,10 +55,7 @@ public class InputManager : MonoBehaviour {
 	GameObject GetClickedGameObject()
 	{
 
-		//Ray2D ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		//RaycastHit2D hit;
-		//int layerMask =0;
-
+		/*
 		RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
 		if (hit.collider != null)
@@ -66,6 +63,14 @@ public class InputManager : MonoBehaviour {
 			return hit.transform.gameObject;
 		}
 		else
-			return null;
+			return null;*/
+
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+
+		if(Physics.Raycast(ray,out hit))
+			return hit.transform.gameObject;			
+		else return null;
+
 	}
 }
