@@ -17,9 +17,9 @@ public class EnemySpawner : MonoBehaviour {
 	{	
 		TimeToSpawnPerEnemy -= Time.deltaTime * 5;
 		
-		if (TimeToSpawnPerEnemy <= 0)
-		{
-			var Enemy = transformPool.getTransform();
+		if (TimeToSpawnPerEnemy <= 0 && transformPool.NumberAvailable != 0)
+		{	
+			Transform Enemy = transformPool.getTransform();
 			
 			Enemy.position = this.transform.position;
 			

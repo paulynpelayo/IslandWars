@@ -79,4 +79,12 @@ public class TransformPool : MonoBehaviour {
 		Debug.Log(transform + " could not be returned to " + pool.Length + " because it is full");
 		return false;
 	}
+
+	public int NumberAvailable
+	{
+		get
+		{
+			return numberAvailable;
+		}
+	}
 }

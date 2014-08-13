@@ -3,8 +3,11 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 
+	public WeaponScript weapon;
 	private GameObject player;
 	private bool clicked = false;
+	private Vector2 Scale;
+
 
 	#region singleton
 	
@@ -37,10 +40,17 @@ public class InputManager : MonoBehaviour {
 		}
 
 		if (clicked)
+		{
 			OnMouseDrag();
+			player.GetComponent<PeopleScript>().playerstate = PeopleScript.Playerstate.Moving;
+		}
 
 		if (Input.GetButtonUp("Fire1"))
+		{
 			clicked = false;
+			player.GetComponent<PeopleScript>().playerstate = PeopleScript.Playerstate.Idle;
+		}
+
 	}
 
 	void OnMouseDrag()
@@ -50,21 +60,22 @@ public class InputManager : MonoBehaviour {
 		point.z = 0;
 
 		player.transform.position = point;
+
+		//to be change by Bon! :D
+		if (player.transform.position.x > 0)
+		{
+			Scale = new Vector2 (1, 1);
+			player.transform.localScale = Scale;
+		}
+		else if (player.transform.position.x < 0)
+		{
+			Scale = new Vector2 (-1, 1);
+			player.transform.localScale = Scale;
+		}
 	}
 
 	GameObject GetClickedGameObject()
 	{
-
-		/*
-		RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-
-		if (hit.collider != null)
-		{	
-			return hit.transform.gameObject;
-		}
-		else
-			return null;*/
-
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 
