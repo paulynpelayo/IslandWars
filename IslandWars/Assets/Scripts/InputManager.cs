@@ -3,8 +3,7 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 
-	public WeaponScript weapon;
-	private GameObject player;
+	private GameObject player, grid;
 	private bool clicked = false;
 	private Vector2 Scale;
 
@@ -34,18 +33,28 @@ public class InputManager : MonoBehaviour {
 
 		if (Input.GetMouseButtonDown(0))
 		{	
-			player = GetClickedGameObject();
+			player = RaycastedObject();
+			Debug.Log(player);
 			if (player != null && player.tag == "Player")
 				clicked = true;
 		}
 
 		if (clicked)
-		{
-			OnMouseDrag();
-			player.GetComponent<PeopleScript>().playerstate = PeopleScript.Playerstate.Moving;
+		{	
+			grid = RaycastedObject();
+
+			if (grid != null && grid.tag == "Grid")
+			{
+				Vector3 point = grid.transform.position;
+				point.z = 0;
+				
+				player.transform.position = point;
+
+				player.GetComponent<PeopleScript>().playerstate = PeopleScript.Playerstate.Moving;
+			}
 		}
 
-		if (Input.GetButtonUp("Fire1"))
+		if (Input.GetButtonUp("Fire1") && clicked)
 		{
 			clicked = false;
 			player.GetComponent<PeopleScript>().playerstate = PeopleScript.Playerstate.Idle;
@@ -53,28 +62,7 @@ public class InputManager : MonoBehaviour {
 
 	}
 
-	void OnMouseDrag()
-	{
-		Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);		
-		
-		point.z = 0;
-
-		player.transform.position = point;
-
-		//to be change by Bon! :D
-		if (player.transform.position.x > 0)
-		{
-			Scale = new Vector2 (1, 1);
-			player.transform.localScale = Scale;
-		}
-		else if (player.transform.position.x < 0)
-		{
-			Scale = new Vector2 (-1, 1);
-			player.transform.localScale = Scale;
-		}
-	}
-
-	GameObject GetClickedGameObject()
+	GameObject RaycastedObject()
 	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;

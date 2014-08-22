@@ -5,14 +5,16 @@
 /// </summary>
 public class MovementScript : MonoBehaviour
 {
-	private int Speed;
+	private float Speed = 0.25f;
 	public Vector2 Direction = new Vector2(-1, 0);	
 	private Vector3 Movement;
 
 	void Start()
 	{
 		Enemy E = gameObject.GetComponent<Enemy>();
-		Speed = E.Speed;
+
+		if (E != null)
+			Speed = E.Speed;
 	}
 
 	void Update()
@@ -23,5 +25,10 @@ public class MovementScript : MonoBehaviour
 	void FixedUpdate()
 	{
 		rigidbody.velocity = Movement;
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Enemy");
 	}
 }

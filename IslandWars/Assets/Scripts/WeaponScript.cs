@@ -8,44 +8,31 @@ public class WeaponScript : MonoBehaviour {
 	public int Cost;
 	private Transform Origin, Target;
 
-	// Use this for initialization
-	void Start () {
-
+	void Start()
+	{
+		Destroy (this.gameObject, 3);
 	}
-	
+
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-
-	/*	if (Target != null)
-		{
-			rigidbody.velocity = Helper.GetVelocityWithAngleAndTarget(Origin, Target.position, 45f);
-			Debug.Log(rigidbody.velocity);
-		}*/
-
 		var dir = rigidbody.velocity;
 		if (dir != Vector3.zero) {
 			float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-			
+			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);			
 		}
 
-
-	}
-
-	public void setTarget(Transform origin, Transform target)
-	{
-		Origin = origin;
-		Target = target;
-	}
-
-	public void SetHelper(TrajectoryHelper helper)
-	{
-		Helper = helper;
 	}
 
 	void OnTriggerEnter (Collider other)
-	{
+	{	
+		if (other.tag == "Target")
+		{				
+			EnemyScript E = other.GetComponent<EnemyScript>();
+			E.GotDamage(Damage);	
 
+			Destroy (gameObject);
+			
+		}
 	}
 }

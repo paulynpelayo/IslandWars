@@ -19,4 +19,21 @@ public class Enemy : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	public void SetDamage(int hit)
+	{
+		Life -= hit;
+
+		if (Life <= 0)
+		{
+			TransformPool pool = null;
+			if (transform.position.x > 0)
+				pool = GameObject.Find("PoolOfEnemies_Right").GetComponent<TransformPool>();
+			else if (transform.position.x < 0)
+				pool = GameObject.Find("PoolOfEnemies_Left").GetComponent<TransformPool>();
+
+			pool.returnTransform(gameObject.transform);
+		}
+	}
+
 }

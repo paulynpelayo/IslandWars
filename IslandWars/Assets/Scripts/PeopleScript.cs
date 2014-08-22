@@ -69,10 +69,14 @@ public class PeopleScript : MonoBehaviour {
 				PlayerAnimator.Stop();
 				PlayerSprite.SetSprite(PlayerSprite.Collection.Count);
 							          
-				Target = ListOfTarget.getNearestEnemy();
+				if (transform.position.x != 0)
+				{	
+					Target = ListOfTarget.getNearestEnemy();
 				
-				if (Target != null)
-					playerstate = Playerstate.Shooting;			
+					if (Target != null)
+						playerstate = Playerstate.Shooting;			
+				}
+				else playerstate = Playerstate.Reserve;		
 
 			break;
 
@@ -99,12 +103,8 @@ public class PeopleScript : MonoBehaviour {
 
 						Vector3 Rotation = new Vector3(Weapon.eulerAngles.x, Weapon.eulerAngles.y, (Weapon.eulerAngles.z + transform.eulerAngles.z) * transform.localScale.x);
 						Weapon.eulerAngles = Rotation;
-
-						Weapon.GetComponent<WeaponScript>().setTarget(WeaponPoint, Target.transform);
-						Weapon.GetComponent<WeaponScript>().SetHelper(gameObject.GetComponent<TrajectoryHelper>());
-						
-						//float angle = Helper.GetAngle(5, WeaponPoint.position, Target.transform.position, true);
-						Weapon.rigidbody.velocity = Helper.GetVelocityWithAngleAndTarget(WeaponPoint, Target.transform.position,  Weapon.eulerAngles.z);// + angle);
+											
+						Weapon.rigidbody.velocity = Helper.GetVelocityWithAngleAndTarget(WeaponPoint, Target.transform.position,  Weapon.eulerAngles.z) * transform.localScale.x;
 						
 						CanShoot = true;
 					}
@@ -133,11 +133,20 @@ public class PeopleScript : MonoBehaviour {
 	public void ChangeTargetSide()
 	{
 		string targetName = gameObject.name;
+		Vector2 Scale;
 		
 		if (transform.position.x > 0)
+		{
 			targetName = targetName + "_RBox";
+			Scale = new Vector2 (1, 1);
+			transform.localScale = Scale;
+		}
 		else if (transform.position.x < 0)
+		{
 			targetName = targetName + "_LBox";
+			Scale = new Vector2 (-1, 1);
+			transform.localScale = Scale;
+		}
 
 		ListOfTarget = GameObject.Find(targetName).GetComponent<TargetList>();
 

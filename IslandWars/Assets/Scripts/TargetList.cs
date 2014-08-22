@@ -11,17 +11,6 @@ public class TargetList : MonoBehaviour {
 	void Start () {
 		ListOfEnemies = new ArrayList();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-	void OnTriggerEnter(Collider other)
-	{	
-		ListOfEnemies.Add (other.gameObject);
-		//Debug.Log (gameObject.name +": " + other.gameObject);
-	}
 
 	public GameObject getNearestEnemy()
 	{	
@@ -44,6 +33,18 @@ public class TargetList : MonoBehaviour {
 			return Nearest;
 		}
 		else return null;
+	}
+
+	public void AddToList(GameObject Enemy)
+	{
+		if (!ListOfEnemies.Contains(Enemy))
+			ListOfEnemies.Add (Enemy);
+
+	}
+
+	public void RemoveFromList(GameObject DeadEnemy)
+	{
+		ListOfEnemies.Remove (DeadEnemy);
 	}
 
 }
