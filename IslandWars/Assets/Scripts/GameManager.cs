@@ -4,6 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
 	#region singleton
+	
 
 	public enum Gamestate
 	{
@@ -11,7 +12,8 @@ public class GameManager : MonoBehaviour {
 		MainMenu, 
 		OptionsMenu,
 		Credits,
-		MainGame
+		MainGame,
+		Loading
 	}
 	private Gamestate _gamestate;	
 	public Gamestate gameState
@@ -60,7 +62,7 @@ public class GameManager : MonoBehaviour {
 			case Gamestate.MainGame:
 
 			StartCoroutine(WaitToChangeScene());
-			Application.LoadLevelAsync("prototype");
+			Application.LoadLevelAsync("LoadingScene");
 
 			break;
 

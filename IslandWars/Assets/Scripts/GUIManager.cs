@@ -26,6 +26,7 @@ public class GUIManager : MonoBehaviour
 	
 	public void ClickedPlayButton()
 	{
+		Debug.Log("Clicked");
 		GameManager.getInstance ().gameState = GameManager.Gamestate.MainGame;
 	}
 

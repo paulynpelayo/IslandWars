@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Collections;
 
 
 public class ScrollingScript : MonoBehaviour
@@ -11,8 +12,25 @@ public class ScrollingScript : MonoBehaviour
 
 	private List<Transform> backgroundPart;
 
+
+	IEnumerator ChangeScene()
+	{
+		AsyncOperation Async  = Application.LoadLevelAsync(1);
+		while(!Async.isDone)
+		{
+			transform.position = new Vector3(transform.position.x, 14f - (28f * Async.progress),0);
+			yield return null;
+		}
+		//yield return new WaitForSeconds();
+
+	}
+
 	void Start()
 	{
+		if(Application.loadedLevelName == "LoadingScene")
+		{
+			StartCoroutine(ChangeScene());
+		}
 		if (isLooping)
 		{
 			backgroundPart = new List<Transform>();
