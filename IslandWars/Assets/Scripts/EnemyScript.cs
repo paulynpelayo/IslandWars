@@ -82,13 +82,16 @@ public class EnemyScript : MonoBehaviour {
 			break;
 
 			case Enemystate.Attacking:
-
-				EnemyAnimator.Stop();
-
+				
+			if (EnemyAnimator.GetClipByName("Attack") != null)
+				EnemyAnimator.Play("Attack");
+						
 			break;
 
 			case Enemystate.Dying:
-
+				
+				EnemyAnimator.Play("Die");
+				
 				List.RemoveFromList(gameObject);
 				Pool.returnTransform(transform);				
 
