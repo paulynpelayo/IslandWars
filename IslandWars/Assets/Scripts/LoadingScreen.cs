@@ -14,4 +14,15 @@ public class LoadingScreen : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	IEnumerator ChangeScene()
+	{
+		AsyncOperation Async  = Application.LoadLevelAsync(1);
+		while(!Async.isDone)
+		{
+			transform.position = new Vector3(transform.position.x, 14f - (28f * Async.progress),0);
+			yield return null;
+		}
+		//yield return new WaitForSeconds();		
+	}
 }

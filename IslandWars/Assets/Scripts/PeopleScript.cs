@@ -38,6 +38,7 @@ public class PeopleScript : MonoBehaviour {
 	private bool CanShoot = true;
 	private Transform WeaponPoint;
 	public Transform WeaponPrefab;
+	public int Cost;
 
 	// Use this for initialization
 	void Start () {
@@ -58,6 +59,11 @@ public class PeopleScript : MonoBehaviour {
 		ChangeState();
 	}
 
+	void ShootComplete (tk2dSpriteAnimator sprite, tk2dSpriteAnimationClip clip)
+	{	
+		CanShoot = false;
+	}
+
 	void ChangeState()
 	{
 		switch (_playerstate)
@@ -72,7 +78,7 @@ public class PeopleScript : MonoBehaviour {
 				if (transform.position.x != 0)
 				{	
 					Target = ListOfTarget.getNearestEnemy();
-				
+					
 					if (Target != null)
 						playerstate = Playerstate.Shooting;			
 				}
@@ -90,12 +96,13 @@ public class PeopleScript : MonoBehaviour {
 				{
 					if (CanShoot)
 					{	
-						PlayerAnimator.Play();					
-						CanShoot = false;
-
+						PlayerAnimator.Play("Attack");					
+						PlayerAnimator.AnimationCompleted = ShootComplete;
 					}
-					else if (!CanShoot && !PlayerAnimator.IsPlaying(PlayerAnimator.CurrentClip))
-				  	{						
+					else
+				  	{		
+						float EnemySpeed = Target.GetComponent<EnemyScript>().Speed;
+						
 						Transform Weapon = Instantiate(WeaponPrefab) as Transform;					
 						
 						Weapon.position = WeaponPoint.position;
@@ -104,8 +111,10 @@ public class PeopleScript : MonoBehaviour {
 						Vector3 Rotation = new Vector3(Weapon.eulerAngles.x, Weapon.eulerAngles.y, (Weapon.eulerAngles.z + transform.eulerAngles.z) * transform.localScale.x);
 						Weapon.eulerAngles = Rotation;
 											
-						Weapon.rigidbody.velocity = Helper.GetVelocityWithAngleAndTarget(WeaponPoint, Target.transform.position,  Weapon.eulerAngles.z) * transform.localScale.x;
+						Weapon.rigidbody.velocity = Helper.GetVelocityWithAngleAndTarget(WeaponPoint, Target.transform.position,  EnemySpeed, Weapon.eulerAngles.z) * transform.localScale.x;
 						
+						Weapon.GetComponent<WeaponScript>().setTarget(Target);
+
 						CanShoot = true;
 					}
 				}
@@ -134,22 +143,37 @@ public class PeopleScript : MonoBehaviour {
 	{
 		string targetName = gameObject.name;
 		Vector2 Scale;
-		
+
 		if (transform.position.x > 0)
 		{
-			targetName = targetName + "_RBox";
+			if (targetName.IndexOf("BlowGun") > -1)
+				ListOfTarget = GameObject.Find("BlowGun_RBox").GetComponent<TargetList>();
+			else if (targetName.IndexOf("Slingshot") > -1)
+				ListOfTarget = GameObject.Find("Slingshot_RBox").GetComponent<TargetList>();
+			else if (targetName.IndexOf("Archer") > -1)
+				ListOfTarget = GameObject.Find("Archer_RBox").GetComponent<TargetList>();
+			else if (targetName.IndexOf("Cannon") > -1)
+				ListOfTarget = GameObject.Find("Cannon_RBox").GetComponent<TargetList>();
+
 			Scale = new Vector2 (1, 1);
 			transform.localScale = Scale;
 		}
 		else if (transform.position.x < 0)
 		{
-			targetName = targetName + "_LBox";
+			if (targetName.IndexOf("BlowGun") > -1)
+				ListOfTarget = GameObject.Find("BlowGun_LBox").GetComponent<TargetList>();
+			else if (targetName.IndexOf("Slingshot") > -1)
+				ListOfTarget = GameObject.Find("Slingshot_LBox").GetComponent<TargetList>();
+			else if (targetName.IndexOf("Archer") > -1)
+				ListOfTarget = GameObject.Find("Archer_LBox").GetComponent<TargetList>();
+			else if (targetName.IndexOf("Cannon") > -1)
+				ListOfTarget = GameObject.Find("Cannon_LBox").GetComponent<TargetList>();
+
 			Scale = new Vector2 (-1, 1);
 			transform.localScale = Scale;
 		}
-
-		ListOfTarget = GameObject.Find(targetName).GetComponent<TargetList>();
-
+		//Debug.Log (GameObject.Find("Slingshot_RBox"));
+		//ListOfTarget = GameObject.Find(targetName).GetComponent<TargetList>();
 	}
 
 }

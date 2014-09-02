@@ -6,7 +6,7 @@ public class WeaponScript : MonoBehaviour {
 	private TrajectoryHelper Helper;
 	public int Damage;
 	public int Cost;
-	private Transform Origin, Target;
+	private GameObject Target;
 
 	void Start()
 	{
@@ -24,9 +24,14 @@ public class WeaponScript : MonoBehaviour {
 
 	}
 
+	public void setTarget (GameObject target)
+	{
+		Target = target;
+	}
+
 	void OnTriggerEnter (Collider other)
 	{	
-		if (other.tag == "Target")
+		if (other.tag == "Target" && other.gameObject == Target)
 		{				
 			EnemyScript E = other.GetComponent<EnemyScript>();
 			E.GotDamage(Damage);	

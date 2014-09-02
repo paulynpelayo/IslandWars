@@ -45,7 +45,7 @@ public class EnemyScript : MonoBehaviour {
 
 	private TransformPool Pool;
 	private Transform TargetPoint;
-	private TargetList List;
+	//private TargetList List;
 
 	// Use this for initialization
 	void Start () {
@@ -59,6 +59,25 @@ public class EnemyScript : MonoBehaviour {
 		ChangeState();
 	}
 
+	void DieCompleteDelegate (tk2dSpriteAnimator sprite, tk2dSpriteAnimationClip clip)
+	{
+		GameObject[] TriggerBoxes = GameObject.FindGameObjectsWithTag ("List");
+
+		for (int x = 0; x < TriggerBoxes.Length; x++)
+		{
+			TargetList List = TriggerBoxes[x].GetComponent<TargetList>();
+			List.RemoveFromList(gameObject);
+		}
+
+		LevelManager.getInstance().NumOfCoins += CoinsGiven;
+		Pool.returnTransform(transform);
+	}
+
+	void AttackDelegate (tk2dSpriteAnimator sprite, tk2dSpriteAnimationClip clip)
+	{
+		Tower.getInstance().setDamage(Damage);
+	}
+
 	void ChangeState()
 	{
 		switch (_enemystate)
@@ -70,7 +89,7 @@ public class EnemyScript : MonoBehaviour {
 			break;
 
 			case Enemystate.Walking:
-
+								
 				EnemyAnimator.Play("Walking");
 
 				transform.position = Vector3.MoveTowards(transform.position, TargetPoint.position, Speed * Time.deltaTime);
@@ -82,18 +101,18 @@ public class EnemyScript : MonoBehaviour {
 			break;
 
 			case Enemystate.Attacking:
+
+				if (EnemyAnimator.GetClipByName("Attack") != null)
+					EnemyAnimator.Play("Attack");
 				
-			if (EnemyAnimator.GetClipByName("Attack") != null)
-				EnemyAnimator.Play("Attack");
+				EnemyAnimator.AnimationCompleted = AttackDelegate;				
 						
 			break;
 
 			case Enemystate.Dying:
 				
-				EnemyAnimator.Play("Die");
-				
-				List.RemoveFromList(gameObject);
-				Pool.returnTransform(transform);				
+				EnemyAnimator.Play("Die");				
+				EnemyAnimator.AnimationCompleted = DieCompleteDelegate;
 
 			break;
 
@@ -110,11 +129,6 @@ public class EnemyScript : MonoBehaviour {
 		TargetPoint = targetPos;
 	}
 
-	public void SetTargetList (Transform list)
-	{
-		List = list.GetComponent<TargetList>();
-	}
-
 	public void GotDamage (int damage)
 	{
 		Life -= damage;
@@ -122,27 +136,13 @@ public class EnemyScript : MonoBehaviour {
 		if (Life <= 0)
 			enemystate = Enemystate.Dying;
 	}
-
+	/*
 	void OnTriggerEnter (Collider other)
 	{	
 		if (other.tag == "List" )
 		{
 			List = other.GetComponent<TargetList>();
 			List.AddToList(gameObject);
-		}/*
-		else if (other.tag == "Weapon")
-		{	
-			Destroy (other.gameObject);
-
-			int WeaponDamage = other.GetComponent<WeaponScript>().Damage;
-
-			Life -= WeaponDamage;
-
-			if (Life <= 0)
-			{
-				enemystate = Enemystate.Dying;
-			}
-
-		}*/
-	}
+		}
+	}*/
 }

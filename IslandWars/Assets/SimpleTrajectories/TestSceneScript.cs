@@ -232,10 +232,10 @@ public class TestSceneScript : MonoBehaviour
         {
             //Use our trajectoryHelper class to find the initial velocity based
             ////on our current angle and our target destination.
-            velocity = trajectoryHelper.GetVelocityWithAngleAndTarget(
-                CannonBarrelExit,
-                targetPosition,
-                cannonAngle);
+           // velocity = trajectoryHelper.GetVelocityWithAngleAndTarget(
+             //   CannonBarrelExit,
+             //   targetPosition,
+             //   cannonAngle);
         }
         else if (currentState == CurrentState.ConstantVelocity)
         {

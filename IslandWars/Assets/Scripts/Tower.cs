@@ -22,6 +22,15 @@ public class Tower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (Life);
+
+	}
+
+	public void setDamage (int damage)
+	{
+		Life -= damage; 
+
+		if (Life  > 0)
+			GUIManager.getInstance().setLifeBar(damage);
+		else GUIManager.getInstance().displayGameOver();
 	}
 }

@@ -13,7 +13,7 @@ public class DotMovement : MonoBehaviour {
 	
 	void Shift()
 	{
-		Debug.Log(i);
+		//Debug.Log(i);
 
 		dot.position =dot.parent.TransformPoint(i,0,0);
 		if(i==1)

@@ -11,8 +11,7 @@ public class ScrollingScript : MonoBehaviour
 	public bool isLooping = false;
 
 	private List<Transform> backgroundPart;
-
-
+	/*
 	IEnumerator ChangeScene()
 	{
 		AsyncOperation Async  = Application.LoadLevelAsync(1);
@@ -23,14 +22,17 @@ public class ScrollingScript : MonoBehaviour
 		}
 		//yield return new WaitForSeconds();
 
-	}
+	}*/
 
 	void Start()
-	{
+	{	
+		/*
 		if(Application.loadedLevelName == "LoadingScene")
 		{
 			StartCoroutine(ChangeScene());
 		}
+		*/
+
 		if (isLooping)
 		{
 			backgroundPart = new List<Transform>();

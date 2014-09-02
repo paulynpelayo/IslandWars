@@ -33,7 +33,7 @@ public class TrajectoryHelper : MonoBehaviour
     /// <param name="destinationPos">The target position of this projectile.</param>
     /// <param name="angle">The initial angle of this projectile (i.e. rotation of the barrel)</param>
     /// <returns>Returns the velocity required to reach the target with the specified angle.</returns>
-    public Vector3 GetVelocityWithAngleAndTarget(Transform initialTransform, Vector3 destinationPos, float angle)
+    public Vector3 GetVelocityWithAngleAndTarget(Transform initialTransform, Vector3 destinationPos, float Speed, float angle)
     {
         Vector3 initialPos = initialTransform.position;
 
@@ -43,8 +43,13 @@ public class TrajectoryHelper : MonoBehaviour
 
         float angleInRads = angle * Mathf.Deg2Rad;
 
+		//destinationPos.x += Speed;
         Vector3 direction = destinationPos - initialPos;
-        
+
+		if (direction.x < -0.75)
+		{
+			direction.x += Speed / 1.5f;
+		}
         //We need to grab the horizontal displacement (distance), so the Y
         //value isn't needed.
         direction.y = 0;

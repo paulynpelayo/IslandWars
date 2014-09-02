@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour {
 		OptionsMenu,
 		Credits,
 		MainGame,
-		Loading
+		Loading,
+		PauseMenu
 	}
 	private Gamestate _gamestate;	
 	public Gamestate gameState
@@ -42,7 +43,8 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		if (Application.loadedLevel == 0)
+			gameState = Gamestate.TeamLogo;
 	}
 	
 	// Update is called once per frame
@@ -52,20 +54,54 @@ public class GameManager : MonoBehaviour {
 
 	IEnumerator WaitToChangeScene()
 	{
-		yield return new WaitForSeconds(5f);
+		yield return new WaitForSeconds(2f);
+		gameState = Gamestate.MainMenu;
+	}
+
+	IEnumerator ChangeScene()
+	{
+		AsyncOperation Async  = Application.LoadLevelAsync(1);
+		while(!Async.isDone)
+		{
+			transform.position = new Vector3(transform.position.x, 14f - (28f * Async.progress),0);
+			yield return null;
+		}
+		//yield return new WaitForSeconds();
+		
 	}
 
 	void ChangeState()
 	{
 		switch (_gamestate)
-		{
-			case Gamestate.MainGame:
+		{	
+			case Gamestate.TeamLogo:
 
 			StartCoroutine(WaitToChangeScene());
-			Application.LoadLevelAsync("LoadingScene");
 
 			break;
 
+			case Gamestate.MainMenu:
+
+			//Application.LoadLevelAsync("MainMenu");
+			Application.LoadLevel(1);
+
+			break;
+
+			case Gamestate.Loading:
+
+			//Application.LoadLevelAsync("LoadingScene");
+			Application.LoadLevel(2);
+			gameState = Gamestate.MainGame;
+
+			break;
+
+			case Gamestate.MainGame:
+
+			//Application.LoadLevelAsync("prototype");
+			Application.LoadLevel(3);
+
+
+			break;
 		}
 	}
 }
