@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour {
 		return instance;
 	}
 
+	//public Transform BG;
 
 	// Use this for initialization
 	void Start () {
@@ -59,15 +60,15 @@ public class GameManager : MonoBehaviour {
 	}
 
 	IEnumerator ChangeScene()
-	{
-		AsyncOperation Async  = Application.LoadLevelAsync(1);
+	{	
+		AsyncOperation Async  = Application.LoadLevelAsync("prototype");
 		while(!Async.isDone)
 		{
-			transform.position = new Vector3(transform.position.x, 14f - (28f * Async.progress),0);
+			//BG.position = new Vector3(BG.position.x, 14f - (28f * Async.progress),0);
 			yield return null;
 		}
 		//yield return new WaitForSeconds();
-		
+		Debug.Log (Application.loadedLevelName);
 	}
 
 	void ChangeState()
@@ -82,23 +83,24 @@ public class GameManager : MonoBehaviour {
 
 			case Gamestate.MainMenu:
 
-			//Application.LoadLevelAsync("MainMenu");
-			Application.LoadLevel(1);
+			Application.LoadLevelAsync("MainMenu");
+			//Application.LoadLevel(1);
 
 			break;
 
 			case Gamestate.Loading:
 
-			//Application.LoadLevelAsync("LoadingScene");
-			Application.LoadLevel(2);
+			Application.LoadLevelAsync("LoadingScene");
+			//Application.LoadLevel(2);
+
 			gameState = Gamestate.MainGame;
 
 			break;
 
 			case Gamestate.MainGame:
 
-			//Application.LoadLevelAsync("prototype");
-			Application.LoadLevel(3);
+			StartCoroutine(ChangeScene());
+			//Application.LoadLevel(3);
 
 
 			break;

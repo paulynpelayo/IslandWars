@@ -144,8 +144,8 @@ public class GUIManager : MonoBehaviour
 	
 	public void displayGameOver()
 	{
-		GameOver.renderer.enabled = true;
-
+		//GameOver.renderer.enabled = true;
+		GameOver.gameObject.active = true;
 	}
 	
 	public void CheckAvailableItems()
