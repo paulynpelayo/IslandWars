@@ -250,9 +250,9 @@ public class tk2dUIManager : MonoBehaviour
                     "The tk2dUIManager will not get destroyed between scene switches and any children will persist as well.");
             }
 
-            if (Application.isPlaying) {
+            /*if (Application.isPlaying) {
                 DontDestroyOnLoad( gameObject );
-            }
+            }*/
         }
         else
         {

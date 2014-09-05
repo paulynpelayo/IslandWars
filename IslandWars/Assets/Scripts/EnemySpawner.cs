@@ -15,9 +15,9 @@ public class EnemySpawner : MonoBehaviour {
 	
 	void Update ()
 	{	
-		if (LevelManager.getInstance().startWave)
+		if (LevelManager.getInstance().readytoSpawn)
 		{
-			TimeToSpawnPerEnemy -= Time.deltaTime * 5;
+			TimeToSpawnPerEnemy -= Time.deltaTime * 10;
 			
 			if (TimeToSpawnPerEnemy <= 0 && transformPool.NumberAvailable != 0)
 			{	
@@ -33,7 +33,7 @@ public class EnemySpawner : MonoBehaviour {
 				E.SetTarget(TargetPos);
 				E.enemystate = EnemyScript.Enemystate.Walking;
 
-				TimeToSpawnPerEnemy = 5;
+				TimeToSpawnPerEnemy = 10;
 			}
 		}	
 

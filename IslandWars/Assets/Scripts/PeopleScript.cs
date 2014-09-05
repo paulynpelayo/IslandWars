@@ -111,11 +111,19 @@ public class PeopleScript : MonoBehaviour {
 						Vector3 Rotation = new Vector3(Weapon.eulerAngles.x, Weapon.eulerAngles.y, (Weapon.eulerAngles.z + transform.eulerAngles.z) * transform.localScale.x);
 						Weapon.eulerAngles = Rotation;
 											
-						Weapon.rigidbody.velocity = Helper.GetVelocityWithAngleAndTarget(WeaponPoint, Target.transform.position,  EnemySpeed, Weapon.eulerAngles.z) * transform.localScale.x;
-						
-						Weapon.GetComponent<WeaponScript>().setTarget(Target);
+						Vector3 Velocity = Helper.GetVelocityWithAngleAndTarget(WeaponPoint, Target.transform.position,  EnemySpeed, Weapon.eulerAngles.z) * transform.localScale.x;
+					
+						//Weapon.rigidbody.velocity = Helper.GetVelocityWithAngleAndTarget(WeaponPoint, Target.transform.position,  EnemySpeed, Weapon.eulerAngles.z) * transform.localScale.x;
 
-						CanShoot = true;
+						if (!float.IsNaN(Velocity.x) && !float.IsNaN(Velocity.y) && !float.IsNaN(Velocity.z))
+						{
+							Weapon.rigidbody.velocity = Velocity;
+
+							Weapon.GetComponent<WeaponScript>().setTarget(Target);
+							
+							CanShoot = true;
+						}						
+					
 					}
 				}
 

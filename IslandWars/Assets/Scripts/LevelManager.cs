@@ -7,10 +7,10 @@ public class LevelManager : MonoBehaviour {
 	public static LevelManager getInstance()
 	{
 		instance = FindObjectOfType(typeof(LevelManager)) as LevelManager;
-		if(instance == null) {
+		/*if(instance == null) {
 			GameObject obj = new GameObject("LevelManager");
 			instance = obj.AddComponent<LevelManager>();
-		}
+		}*/
 			
 		return instance;
 
@@ -37,10 +37,10 @@ public class LevelManager : MonoBehaviour {
 		}
 	}
 
-	public bool startWave = false;
+	public bool startSailing = false, readytoSpawn = false;
 
 	// Use this for initialization
-	void Awake () 
+	void Start () 
 	{
 		Coins = 50;
 		WaveNum = 1;
@@ -49,7 +49,8 @@ public class LevelManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+
 	}
 
 	public void InitializeWave()

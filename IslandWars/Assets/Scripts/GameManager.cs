@@ -40,11 +40,13 @@ public class GameManager : MonoBehaviour {
 		return instance;
 	}
 
+	//public Transform BG;
 
 	// Use this for initialization
 	void Start () {
 		if (Application.loadedLevel == 0)
 			gameState = Gamestate.TeamLogo;
+
 	}
 	
 	// Update is called once per frame
@@ -59,15 +61,15 @@ public class GameManager : MonoBehaviour {
 	}
 
 	IEnumerator ChangeScene()
-	{
-		AsyncOperation Async  = Application.LoadLevelAsync(1);
+	{	
+		AsyncOperation Async  = Application.LoadLevelAsync("prototype");
 		while(!Async.isDone)
 		{
-			transform.position = new Vector3(transform.position.x, 14f - (28f * Async.progress),0);
+			//BG.position = new Vector3(BG.position.x, 14f - (28f * Async.progress),0);
 			yield return null;
 		}
 		//yield return new WaitForSeconds();
-		
+		Debug.Log (Application.loadedLevelName);
 	}
 
 	void ChangeState()
@@ -91,13 +93,14 @@ public class GameManager : MonoBehaviour {
 
 			//Application.LoadLevelAsync("LoadingScene");
 			Application.LoadLevel(2);
+
 			gameState = Gamestate.MainGame;
 
 			break;
 
 			case Gamestate.MainGame:
 
-			//Application.LoadLevelAsync("prototype");
+			//StartCoroutine(ChangeScene());
 			Application.LoadLevel(3);
 
 

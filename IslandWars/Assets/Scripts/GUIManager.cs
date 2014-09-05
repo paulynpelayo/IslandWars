@@ -15,20 +15,21 @@ public class GUIManager : MonoBehaviour
 	}
 	
 	public tk2dClippedSprite lifebar;
-	public tk2dSprite GameOver, PauseWindow, StoreWindow;
-	public tk2dSprite[] CoinsSprite;
-	public tk2dSprite[] PFBSprite;
+	public tk2dSprite MusicMark, SFXMark;
+	public tk2dSprite GameOver, PauseWindow, StoreWindow, OptionsWindow;
+	public tk2dSprite[] CoinsSprite, PFBSprite;
 	public tk2dSlicedSprite StoreButton;
 	public tk2dSlicedSprite[] ItemBtns;
 	public tk2dSpriteCollection Numbers;
 	
 	private int Coins;
 	private bool[] isAvailableItem;
-	private bool CanOpenStore = true;
+	private bool CanOpenStore = true, isMusicOn = true, isSFXOn = true;
+	private bool NoPopUpsDisplayed = true;
 	
 	void Start()
 	{
-		Coins = LevelManager.getInstance().NumOfCoins;
+		//Coins = LevelManager.getInstance().NumOfCoins;
 	}
 	
 	void Update()
@@ -49,29 +50,32 @@ public class GUIManager : MonoBehaviour
 	
 	public void ClickedPlayButton()
 	{
-		//Debug.Log("Clicked");
-		GameManager.getInstance().gameState = GameManager.Gamestate.Loading;
+		if (NoPopUpsDisplayed)
+		{
+			GameManager.getInstance().gameState = GameManager.Gamestate.Loading;		
+		}
 	}
-	
-	public void ClickedOptionsButton()
-	{
-		
-	}
-	
+
 	public void ClickedCreditsButton()
 	{
-		
+		//if (NoPopUpsDisplayed)
 	}
 	
 	public void ClickedPauseButton()
 	{
-		Time.timeScale = 0;
-		//GameManager.getInstance().Gamestate = GameManager.Gamestate.PauseMenu;
-		PauseWindow.gameObject.active = true;
+		if (NoPopUpsDisplayed)
+		{
+			NoPopUpsDisplayed = false;
+			Time.timeScale = 0;
+			CanOpenStore = true;
+			StoreWindow.gameObject.active = false;
+			PauseWindow.gameObject.active = true;
+		}
 	}
 	
 	public void ClickedResumeButton()
 	{
+		NoPopUpsDisplayed = true;
 		Time.timeScale = 1;
 		PauseWindow.gameObject.active = false;
 	}
@@ -81,19 +85,80 @@ public class GUIManager : MonoBehaviour
 		Time.timeScale = 1;
 		GameManager.getInstance().gameState = GameManager.Gamestate.MainMenu;
 	}
-	
-	public void ClickedStoreButton()
+
+	public void ClickedRetryButton()
 	{
-		if (CanOpenStore)
+		Time.timeScale = 1;
+		GameManager.getInstance().gameState = GameManager.Gamestate.Loading;
+	}
+
+	public void ClickedOptionsButton()
+	{
+		NoPopUpsDisplayed = false;
+	
+		//if (PauseWindow == null)
+		//{
+		//	PauseWindow.gameObject.active = false;
+		//}
+
+
+		OptionsWindow.gameObject.active = true;
+	}
+
+	public void ClickedBackButton()
+	{
+		OptionsWindow.gameObject.active = false;
+
+		if (PauseWindow == null)
+			NoPopUpsDisplayed = true;
+		else
+			PauseWindow.gameObject.active = true;
+
+	}
+
+	public void ClickedMusicCheckBox()
+	{
+		if (!isMusicOn)
 		{
-			CheckAvailableItems();
-			StoreWindow.gameObject.active = true;
-			CanOpenStore = false;
+			isMusicOn = true;
+			MusicMark.gameObject.active = true;
 		}
 		else 
 		{
-			StoreWindow.gameObject.active = false;
-			CanOpenStore = true;
+			isMusicOn = false;
+			MusicMark.gameObject.active = false;
+		}
+	}
+
+	public void ClickedSFXCheckBox()
+	{
+		if (!isSFXOn)
+		{
+			isSFXOn = true;
+			SFXMark.gameObject.active = true;
+		}
+		else 
+		{
+			isSFXOn = false;
+			SFXMark.gameObject.active = false;
+		}
+	}
+
+	public void ClickedStoreButton()
+	{	
+		if (NoPopUpsDisplayed)
+		{
+			if (CanOpenStore)
+			{
+				CheckAvailableItems();
+				StoreWindow.gameObject.active = true;
+				CanOpenStore = false;
+			}
+			else 
+			{
+				StoreWindow.gameObject.active = false;
+				CanOpenStore = true;
+			}
 		}
 	}
 	
@@ -144,8 +209,9 @@ public class GUIManager : MonoBehaviour
 	
 	public void displayGameOver()
 	{
-		GameOver.renderer.enabled = true;
-
+		//GameOver.renderer.enabled = true;
+		Time.timeScale = 0;
+		GameOver.gameObject.active = true;
 	}
 	
 	public void CheckAvailableItems()
@@ -183,17 +249,22 @@ public class GUIManager : MonoBehaviour
 	}
 
 	public IEnumerator PrepareForBattle()
-	{
+	{	
+		NoPopUpsDisplayed = false;
+
 		if (PFBSprite != null)
-		{
+		{	
 			for (int x = 0; x < PFBSprite.Length; x++)
-			{
+			{	
 				PFBSprite[x].renderer.enabled = true;
 				yield return new WaitForSeconds(1f);
 				PFBSprite[x].renderer.enabled = false;
 
 				if (x == PFBSprite.Length-1)
-					LevelManager.getInstance ().startWave = true;
+				{
+					LevelManager.getInstance ().startSailing = true;
+					NoPopUpsDisplayed = true;
+				}
 			}
 		}
 
