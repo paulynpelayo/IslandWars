@@ -51,6 +51,7 @@ public class EnemyScript : MonoBehaviour {
 	void Start () {
 		EnemySprite = gameObject.GetComponent<tk2dSprite>();
 		EnemyAnimator = gameObject.GetComponent<tk2dSpriteAnimator>();
+
 	}
 	
 	// Update is called once per frame
@@ -70,6 +71,7 @@ public class EnemyScript : MonoBehaviour {
 		}
 
 		LevelManager.getInstance().NumOfCoins += CoinsGiven;
+		LevelManager.getInstance().EnemiesKilled += 1;
 		Pool.returnTransform(transform);
 	}
 

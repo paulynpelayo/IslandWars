@@ -1,23 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TransformPool : MonoBehaviour {
-	
+
 	//public Transform transformprefab;
-	public int initialAvailability; 
-	
-	private Transform[] pool;
-	public Transform pool0;
-	public Transform pool1;
-	public Transform pool2;
-	public Transform pool3;
-	public Transform pool4;
-	public Transform pool5;
-	private int numberAvailable;	
+	//public int initialAvailability; 
+
+	public Transform EnemyPrefab;
+
+	private List<Transform> EnemyPool = new List<Transform>();
+
+	public int initialAvailability = 10;
+
+	//private Transform[] pool;
+	//public Transform pool0;
+	//public Transform pool1;
+	//public Transform pool2;
+	//public Transform pool3;
+	////public Transform pool4;
+	//public Transform pool5;
+	private int NumberAvailable;	
 	
 	void Start ()
 	{
-		pool = new Transform[initialAvailability];
+		/*pool = new Transform[initialAvailability];
 		
 		pool[0] = Instantiate(pool0) as Transform;
 		pool[1] = Instantiate(pool1) as Transform;
@@ -31,7 +38,18 @@ public class TransformPool : MonoBehaviour {
 			//pool[i] = Instantiate(transformprefab) as Transform;	
 			Deactivate( pool[i] );
 		}
-		numberAvailable = initialAvailability;
+		*/
+		NumberAvailable = initialAvailability;
+
+		for (int i = 0; i < initialAvailability; i++)
+		{
+			EnemyPool.Add(Instantiate(EnemyPrefab) as Transform);
+			Deactivate( EnemyPool[i] );
+
+		}
+
+		Debug.Log ("Initalizing " + EnemyPrefab.name + " Pool Done!");
+
 	}
 	
 	public void Deactivate(Transform transform)
@@ -56,35 +74,45 @@ public class TransformPool : MonoBehaviour {
 	
 	public Transform getTransform()
 	{	
-		if (numberAvailable > 0)
+		if (NumberAvailable > 0)
 		{
-			numberAvailable--;
-			Activate( pool[numberAvailable] );
-			return pool[numberAvailable];
+			NumberAvailable--;
+
+			Activate( EnemyPool[NumberAvailable] );
+			return EnemyPool[NumberAvailable];
 		}
-		//Debug.Log("Not enough " + transformprefab + "s in " + pool);
+		else
+		{
+			Transform New = Instantiate(EnemyPrefab) as Transform;
+			EnemyPool.Add(New);
+			return New;
+		}
+
+		Debug.Log("Not enough " + EnemyPrefab + "s in " + EnemyPool);
 		return null;
 	}
 	
 	public bool returnTransform(Transform transform)
 	{
-		if (numberAvailable < pool.Length)
+	
+		if (NumberAvailable < EnemyPool.Count)
 		{
 			Deactivate(transform);
-			pool[numberAvailable] = transform;
-			numberAvailable++;
+			EnemyPool[NumberAvailable] = transform;
+			NumberAvailable++;
 			return true;
 		}
-		Debug.Log("available" + numberAvailable);
-		Debug.Log(transform + " could not be returned to " + pool.Length + " because it is full");
+
+		Debug.Log("available" + NumberAvailable);
+		Debug.Log(transform + " could not be returned to " + EnemyPool.Count + " because it is full");
 		return false;
 	}
 
-	public int NumberAvailable
+	public int getNumberAvailable
 	{
 		get
 		{
-			return numberAvailable;
+			return NumberAvailable;
 		}
 	}
 }

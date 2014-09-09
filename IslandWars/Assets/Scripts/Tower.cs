@@ -13,11 +13,26 @@ public class Tower : MonoBehaviour {
 		return instance;
 	}
 
+	private int TowerLvl = 0;
+	public int TowerLevel
+	{
+		get { return TowerLvl; }
+		set
+		{
+			TowerLvl = value;
+			IncreaseLevel();
+		}
+
+	}
+
+	public Transform TowerRoof;
+	public Transform[] TowerPrefabs;
+
 	private int Life = 100;
 
 	// Use this for initialization
 	void Start () {
-		
+		//TowerLvl = PlayerPrefs;
 	}
 	
 	// Update is called once per frame
@@ -32,5 +47,22 @@ public class Tower : MonoBehaviour {
 		if (Life  > 0)
 			GUIManager.getInstance().setLifeBar(damage);
 		else GUIManager.getInstance().displayGameOver();
+	}
+
+	public void IncreaseLevel()
+	{
+		float offset = 0.45f;
+
+		TowerRoof.position = new Vector2(TowerRoof.position.x, TowerRoof.position.y + offset);
+
+		for (int x = 0; x < TowerPrefabs.Length; x++)
+		{
+			TowerPrefabs[x].position = new Vector2(TowerPrefabs[x].position.x, TowerPrefabs[x].position.y + offset);;
+
+			if (x == TowerLvl - 1)
+			{
+				TowerPrefabs[x].gameObject.active = true;
+			}
+		}
 	}
 }
