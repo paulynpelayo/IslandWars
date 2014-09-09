@@ -84,15 +84,20 @@ public class GameManager : MonoBehaviour {
 
 			case Gamestate.MainMenu:
 
-			//Application.LoadLevelAsync("MainMenu");
-			Application.LoadLevel(1);
+			Application.LoadLevelAsync("MainMenu");
+			//Application.LoadLevel(1);
 
 			break;
 
 			case Gamestate.Loading:
 
+
 			//Application.LoadLevelAsync("LoadingScene");
 			Application.LoadLevel(2);
+
+			Application.LoadLevelAsync("LoadingScene");
+			//Application.LoadLevel(2);
+
 
 			gameState = Gamestate.MainGame;
 
@@ -100,8 +105,13 @@ public class GameManager : MonoBehaviour {
 
 			case Gamestate.MainGame:
 
+
 			//StartCoroutine(ChangeScene());
 			Application.LoadLevel(3);
+
+			StartCoroutine(ChangeScene());
+			//Application.LoadLevel(3);
+
 
 
 			break;

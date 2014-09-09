@@ -29,6 +29,9 @@ public class GUIManager : MonoBehaviour
 	
 	void Start()
 	{
+
+		//Coins = LevelManager.getInstance().NumOfCoins;
+
 		//Coins = LevelManager.getInstance().NumOfCoins;
 	}
 	
