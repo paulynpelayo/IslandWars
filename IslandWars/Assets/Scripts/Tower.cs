@@ -33,4 +33,9 @@ public class Tower : MonoBehaviour {
 			GUIManager.getInstance().setLifeBar(damage);
 		else GUIManager.getInstance().displayGameOver();
 	}
+
+	public void increaseLevel()
+	{
+		Debug.Log ("Increase Level");
+	}
 }
