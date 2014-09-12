@@ -7,9 +7,11 @@ public class SailBoat : MonoBehaviour {
 	public float TimeToSail = 3f;
 	public bool isSailing = false;
 
+	private Vector2 OrigPosition;
+
 	// Use this for initialization
 	void Start () {
-	
+		OrigPosition = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -36,6 +38,11 @@ public class SailBoat : MonoBehaviour {
 	void ReadyToSail()
 	{		
 		transform.position = Vector3.MoveTowards(transform.position, TargetPoint.position, TimeToSail * Time.deltaTime * 0.1f);
+	}
+
+	public void ResetPosition()
+	{
+		transform.position = OrigPosition;
 	}
 	
 }

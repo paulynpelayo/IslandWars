@@ -16,7 +16,7 @@ public class GUIManager : MonoBehaviour
 	
 	public tk2dClippedSprite lifebar;
 	public tk2dSprite MusicMark, SFXMark;
-	public tk2dSprite GameOver, PauseWindow, StoreWindow, OptionsWindow;
+	public tk2dSprite GameOver, PauseWindow, StoreWindow, OptionsWindow, Victory;
 	public tk2dSprite[] CoinsSprite, PFBSprite;
 	public tk2dSlicedSprite StoreButton;
 	public tk2dSlicedSprite[] ItemBtns;
@@ -29,9 +29,6 @@ public class GUIManager : MonoBehaviour
 	
 	void Start()
 	{
-
-		//Coins = LevelManager.getInstance().NumOfCoins;
-
 		//Coins = LevelManager.getInstance().NumOfCoins;
 	}
 	
@@ -92,8 +89,25 @@ public class GUIManager : MonoBehaviour
 	public void ClickedRetryButton()
 	{
 		Time.timeScale = 1;
+
+		//LevelManager.getInstance ().NumOfCoins = 50;
+		//LevelManager.getInstance().ResetLevel();
+		//LevelManager.getInstance().WaveNum = 1;	
+		//StartCoroutine(GUIManager.getInstance().PrepareForBattle());
 		GameManager.getInstance().gameState = GameManager.Gamestate.Loading;
 	}
+
+	public void ClickedNextLevel()
+	{
+		Victory.gameObject.active = false;
+		LevelManager.getInstance().ResetLevel();
+		
+		int currentWave = LevelManager.getInstance().WaveNum;
+		LevelManager.getInstance().WaveNum = currentWave + 1;
+		StartCoroutine(GUIManager.getInstance().PrepareForBattle());
+		
+	}
+
 
 	public void ClickedOptionsButton()
 	{
@@ -101,10 +115,10 @@ public class GUIManager : MonoBehaviour
 	
 		//if (PauseWindow == null)
 		//{
-		//	PauseWindow.gameObject.active = false;
+			PauseWindow.gameObject.active = false;
 		//}
 
-
+		Victory.gameObject.active = false;
 		OptionsWindow.gameObject.active = true;
 	}
 
@@ -209,7 +223,12 @@ public class GUIManager : MonoBehaviour
 	{
 		lifebar.clipTopRight = new Vector2 (lifebar.clipTopRight.x - (Damage * 0.01f), lifebar.clipTopRight.y);
 	}
-	
+
+	public void displayVictory()
+	{
+		Victory.gameObject.active = true;
+	}
+
 	public void displayGameOver()
 	{
 		//GameOver.renderer.enabled = true;
