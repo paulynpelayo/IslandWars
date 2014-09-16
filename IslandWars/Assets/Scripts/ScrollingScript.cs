@@ -11,27 +11,29 @@ public class ScrollingScript : MonoBehaviour
 	public bool isLooping = false;
 
 	private List<Transform> backgroundPart;
-	/*
+
 	IEnumerator ChangeScene()
 	{
-		AsyncOperation Async  = Application.LoadLevelAsync(1);
+		yield return new WaitForSeconds(3f);
+		AsyncOperation Async  = Application.LoadLevelAsync("prototype");
 		while(!Async.isDone)
 		{
-			transform.position = new Vector3(transform.position.x, 14f - (28f * Async.progress),0);
+			//transform.position = new Vector3(transform.position.x, 14f - (28f * Async.progress),0);
 			yield return null;
+			Debug.Log("Enter Async");
 		}
-		//yield return new WaitForSeconds();
 
-	}*/
+
+	}
 
 	void Start()
 	{	
-		/*
 		if(Application.loadedLevelName == "LoadingScene")
 		{
 			StartCoroutine(ChangeScene());
+			Debug.Log ("Loading");
 		}
-		*/
+
 
 		if (isLooping)
 		{

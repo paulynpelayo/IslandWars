@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 		return instance;
 	}
 
-	//public Transform BG;
+	public Transform BG;
 
 	// Use this for initialization
 	void Start () {
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (_gamestate);
+		//Debug.Log (_gamestate);
 	}
 
 	IEnumerator WaitToChangeScene()
@@ -66,10 +66,11 @@ public class GameManager : MonoBehaviour {
 		AsyncOperation Async  = Application.LoadLevelAsync("prototype");
 		while(!Async.isDone)
 		{
-			//BG.position = new Vector3(BG.position.x, 14f - (28f * Async.progress),0);
-			yield return null;
+			BG.position = new Vector3(BG.position.x, 14f - (28f * Async.progress),0);
+			//yield return null;
 		}
-		//yield return new WaitForSeconds();
+		yield return new WaitForSeconds(2f);
+	
 	}
 
 	void ChangeState()
@@ -84,8 +85,8 @@ public class GameManager : MonoBehaviour {
 
 			case Gamestate.MainMenu:
 
-				//Application.LoadLevelAsync("MainMenu");
-				Application.LoadLevel(1);
+				Application.LoadLevelAsync("MainMenu");
+				//Application.LoadLevel(1);
 
 			break;
 
@@ -94,7 +95,8 @@ public class GameManager : MonoBehaviour {
 				//Application.LoadLevelAsync("LoadingScene");
 				Application.LoadLevel(2);
 
-				gameState = Gamestate.MainGame;
+			//gameState = Gamestate.MainGame;
+			
 
 			break;
 

@@ -80,6 +80,7 @@ public class UpgradesManager : MonoBehaviour {
 			int iconID = ArrTowerHeight[buttonNum - 1].spriteId;
 			Icon.SetSprite(iconID);
 
+			//Upgrades Details Window
 			string Info = "Level " + buttonNum;
 			string Subinfo = "+1 Deck";
 			DisplayInfoWindow("TowerHeight", Info, Subinfo, amount);
@@ -87,31 +88,96 @@ public class UpgradesManager : MonoBehaviour {
 
 	}
 
-	public void ClickedTowerDefense()
+	public void ClickedTowerDefense(tk2dUIItem Button)
 	{
+		int buttonNum;
+
+		int.TryParse(Button.gameObject.name, out buttonNum);
+
 		if (NoPopUpsDisplayed)
 		{
-			if(curTowerDefense < 4)
-			{
-				curTowerDefense += 1;
-			}
+			int amount = 0;
+			string Info = "";
+			string Subinfo = "";
 			
-			ArrTowerDefense[curTowerDefense].color = new Color(1,1,1,1);
-		}
+			switch(buttonNum)
+			{
+			case 1: 
+				amount = 10; 
+				Info = "Building Techniques";
+				Subinfo = "+10 Life";
+				break;
+			case 2: 
+				amount = 50;
+				Info = "Hardwood Panels";
+				Subinfo = "+20 Life";
+				break;
+			case 3: 
+				amount = 150;
+				Info = "Stone Defense";
+				Subinfo = "+50 Life";
+				break;
+			case 4: 
+				amount = 300;
+				Info = "Masonry";
+				Subinfo = "+75 Life";
+				break;
+			}
 
+			int iconID = ArrTowerDefense[buttonNum - 1].spriteId;
+			Icon.SetSprite(iconID);
+
+			DisplayInfoWindow("TowerDefense", Info, Subinfo, amount);
+		}
 	}
 
-	public void ClickedArcherUpgrades()
+	public void ClickedArcherUpgrades(tk2dUIItem Button)
 	{
+		/*int buttonNum;
+		
+		int.TryParse(Button.gameObject.name, out buttonNum);
+		
 		if (NoPopUpsDisplayed)
 		{
-			if(curArcherUpgrades < 4)
+			int amount = 0;
+			string Info = "";
+			string Subinfo = "";
+			
+			switch(buttonNum)
 			{
-				curArcherUpgrades += 1;
+			case 1: 
+				amount = 10; 
+				Info = "Building Techniques";
+				Subinfo = "+10 Life";
+				break;
+			case 2: 
+				amount = 50;
+				Info = "Hardwood Panels";
+				Subinfo = "+20 Life";
+				break;
+			case 3: 
+				amount = 150;
+				Info = "Stone Defense";
+				Subinfo = "+50 Life";
+				break;
+			case 4: 
+				amount = 300;
+				Info = "Masonry";
+				Subinfo = "+75 Life";
+				break;
 			}
 			
-			ArrArcherUpgrades[curArcherUpgrades].color = new Color(1,1,1,1);
+			int iconID = ArrTowerDefense[buttonNum - 1].spriteId;
+			Icon.SetSprite(iconID);
+			
+			DisplayInfoWindow("TowerDefense", Info, Subinfo, amount);
+
+		/*if(curArcherUpgrades < 4)
+		{
+			curArcherUpgrades += 1;
 		}
+		
+		ArrArcherUpgrades[curArcherUpgrades].color = new Color(1,1,1,1);*/
 	}
 
 	public void ClickedBlowgunUpgrades()
@@ -194,7 +260,7 @@ public class UpgradesManager : MonoBehaviour {
 			NoPopUpsDisplayed = true;
 		}
 	}
-
+	
 	public void DisplayInfoWindow(string button, string Info, string Subinfo, int amount)
 	{	
 		NoPopUpsDisplayed = false;
@@ -224,6 +290,9 @@ public class UpgradesManager : MonoBehaviour {
 
 	}
 
+	/// <summary>
+	/// Upgrades the height of the tower.
+	/// </summary>
 	public void UpgradeTowerHeight()
 	{
 		if(curTowerHeight < 4)
@@ -233,14 +302,28 @@ public class UpgradesManager : MonoBehaviour {
 		}
 		else curTowerHeight = 4;
 
+		//Save Player Attributes
 		PlayerInfo.getInstance().SaveTowerHeight = curTowerHeight;
 
 		if (Application.loadedLevelName == "prototype")
 			Tower.getInstance().TowerLevel += 1;
 	}
 
+
 	public void UpgradeTowerDefense()
 	{
+		if(curTowerDefense < 4)
+		{
+			ArrTowerDefense[curTowerDefense].color = new Color(1,1,1,1);
+			curTowerDefense += 1;
+		}
+		else curTowerDefense = 4;
+		
+		//Save Player Attributes
+		PlayerInfo.getInstance().SaveTowerDefense = curTowerDefense;
+		
+		/*if (Application.loadedLevelName == "prototype")
+			Tower.getInstance().TowerLevel += 1;*/
 
 	}
 

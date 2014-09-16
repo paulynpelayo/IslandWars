@@ -62,7 +62,7 @@ public class PlayerInfo : MonoBehaviour {
 		Debug.Log("Instantiating");
 
 		#if UNITY_EDITOR
-			//PlayerPrefs.DeleteAll();
+			PlayerPrefs.DeleteAll();
 		#endif
 
 		if (!PlayerPrefs.HasKey("BravePoints")) PlayerPrefs.SetInt("BravePoints", 100);
