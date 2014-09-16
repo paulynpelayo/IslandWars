@@ -17,6 +17,7 @@ public class GUIManager : MonoBehaviour
 	public tk2dClippedSprite lifebar;
 	public tk2dSprite MusicMark, SFXMark;
 	public tk2dSprite GameOver, PauseWindow, StoreWindow, OptionsWindow, Victory;
+	public GameObject InGameWindow, UpgradesWindow;
 	public tk2dSprite[] CoinsSprite, PFBSprite;
 	public tk2dSlicedSprite StoreButton;
 	public tk2dSlicedSprite[] ItemBtns;
@@ -25,8 +26,8 @@ public class GUIManager : MonoBehaviour
 	private int Coins;
 	private bool[] isAvailableItem;
 	private bool CanOpenStore = true, isMusicOn = true, isSFXOn = true;
-	private bool NoPopUpsDisplayed = true;
-	
+	public bool NoPopUpsDisplayed = false;
+		
 	void Start()
 	{
 		//Coins = LevelManager.getInstance().NumOfCoins;
@@ -43,7 +44,7 @@ public class GUIManager : MonoBehaviour
 				StoreButton.color = new Color (1,1,1,0.25f);
 				CheckAvailableItems();
 			}
-			
+
 			UpdateNumofCoins();
 		}
 	}
@@ -99,6 +100,9 @@ public class GUIManager : MonoBehaviour
 
 	public void ClickedNextLevel()
 	{
+		Time.timeScale = 1;
+		NoPopUpsDisplayed = true;
+
 		Victory.gameObject.active = false;
 		LevelManager.getInstance().ResetLevel();
 		
@@ -108,17 +112,32 @@ public class GUIManager : MonoBehaviour
 		
 	}
 
+	public void ClickedUpgradesButton()
+	{
+		if (UpgradesWindow != null)
+		{	
+			UpgradesWindow.active = true;
+		}
+		else GameManager.getInstance().LoadUpgradesWindow();
+
+		if (Application.loadedLevelName == "prototype")
+		{
+			Victory.gameObject.active = false;
+			InGameWindow.active = false;
+		}
+	}
 
 	public void ClickedOptionsButton()
 	{
 		NoPopUpsDisplayed = false;
 	
-		//if (PauseWindow == null)
-		//{
+		if (PauseWindow != null)
+		{
 			PauseWindow.gameObject.active = false;
-		//}
-
-		Victory.gameObject.active = false;
+			Victory.gameObject.active = false;
+			GameOver.gameObject.active = false;
+		}
+	
 		OptionsWindow.gameObject.active = true;
 	}
 
@@ -225,15 +244,24 @@ public class GUIManager : MonoBehaviour
 	}
 
 	public void displayVictory()
-	{
-		Victory.gameObject.active = true;
+	{	
+		//if (NoPopUpsDisplayed)
+		//{
+			NoPopUpsDisplayed = false;
+
+			Time.timeScale = 0;
+			Victory.gameObject.active = true;
+			StoreWindow.gameObject.active = false;
+		//}
 	}
 
 	public void displayGameOver()
 	{
+		NoPopUpsDisplayed = false;
 		//GameOver.renderer.enabled = true;
 		Time.timeScale = 0;
 		GameOver.gameObject.active = true;
+		StoreWindow.gameObject.active = false;
 	}
 	
 	public void CheckAvailableItems()

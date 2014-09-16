@@ -32,7 +32,10 @@ public class Tower : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//TowerLvl = PlayerPrefs;
+		TowerLvl = PlayerInfo.getInstance().SaveTowerHeight;
+
+		for (int x = 1; x < TowerLvl; x++)
+			IncreaseLevel();
 	}
 	
 	// Update is called once per frame
@@ -49,7 +52,7 @@ public class Tower : MonoBehaviour {
 		else GUIManager.getInstance().displayGameOver();
 	}
 
-	public void IncreaseLevel()
+	private void IncreaseLevel()
 	{
 		float offset = 0.45f;
 
@@ -59,7 +62,7 @@ public class Tower : MonoBehaviour {
 		{
 			TowerPrefabs[x].position = new Vector2(TowerPrefabs[x].position.x, TowerPrefabs[x].position.y + offset);;
 
-			if (x == TowerLvl - 1)
+			if (x < TowerLvl - 1)
 			{
 				TowerPrefabs[x].gameObject.active = true;
 			}

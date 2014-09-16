@@ -79,6 +79,7 @@ public class LevelManager : MonoBehaviour {
 		if (EnemiesKilled == ListofEnemies.Count)
 		{
 			GUIManager.getInstance().displayVictory();
+			EnemiesKilled = 0;
 			//GUIManager.getInstance().ClickedNextLevel();
 			Debug.Log("Victory");
 		}
@@ -87,18 +88,16 @@ public class LevelManager : MonoBehaviour {
 
 	public void InitializeWave()
 	{
-		switch (Wave) 
+		/*switch (Wave) 
 		{
 			case 1: 
 
 			numOfBrute = 1;
-			numOfSmasher = 1;
-			numOfSprinter = 1;
-			numOfStandard = 1;
+			numOfSmasher = 0;
+			numOfSprinter = 0;
+			numOfStandard = 0;
 
 			SpawnDelay = 3f;
-
-			//Tower.getInstance().TowerLevel += 1;
 
 			break;
 
@@ -111,8 +110,6 @@ public class LevelManager : MonoBehaviour {
 
 			SpawnDelay = 2f;
 
-			//Tower.getInstance().TowerLevel += 1;
-			
 			break;
 
 			case 3: 
@@ -124,10 +121,13 @@ public class LevelManager : MonoBehaviour {
 
 			SpawnDelay = 1f;
 
-			//Tower.getInstance().TowerLevel += 1;
-
 			break;				
-		}
+		}*/
+
+		numOfBrute += 1;
+		numOfSmasher += 1;
+		numOfSprinter += 2;
+		numOfStandard += 1;
 
 		AddToList("Brute", numOfBrute);
 		AddToList("Smasher", numOfSmasher);

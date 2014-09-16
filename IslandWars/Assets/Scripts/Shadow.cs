@@ -8,9 +8,8 @@ public class Shadow : MonoBehaviour {
 	{
 		if(Logo.tag == "Logo")
 		{
-			//Debug.Log("Logo Hello");
 			gameObject.GetComponent<MeshRenderer>().enabled = true;
-
+			GUIManager.getInstance().NoPopUpsDisplayed = true;
 		}
 	}
 }

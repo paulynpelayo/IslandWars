@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour {
 		Credits,
 		MainGame,
 		Loading,
-		PauseMenu
+		PauseMenu,
+		Upgrades
 	}
 	private Gamestate _gamestate;	
 	public Gamestate gameState
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		Debug.Log (_gamestate);
 	}
 
 	IEnumerator WaitToChangeScene()
@@ -69,7 +70,6 @@ public class GameManager : MonoBehaviour {
 			yield return null;
 		}
 		//yield return new WaitForSeconds();
-		Debug.Log (Application.loadedLevelName);
 	}
 
 	void ChangeState()
@@ -78,43 +78,38 @@ public class GameManager : MonoBehaviour {
 		{	
 			case Gamestate.TeamLogo:
 
-			StartCoroutine(WaitToChangeScene());
+				StartCoroutine(WaitToChangeScene());
 
 			break;
 
 			case Gamestate.MainMenu:
 
-			Application.LoadLevelAsync("MainMenu");
-			//Application.LoadLevel(1);
+				//Application.LoadLevelAsync("MainMenu");
+				Application.LoadLevel(1);
 
 			break;
 
 			case Gamestate.Loading:
 
+				//Application.LoadLevelAsync("LoadingScene");
+				Application.LoadLevel(2);
 
-			//Application.LoadLevelAsync("LoadingScene");
-			Application.LoadLevel(2);
-
-			Application.LoadLevelAsync("LoadingScene");
-			//Application.LoadLevel(2);
-
-
-			gameState = Gamestate.MainGame;
+				gameState = Gamestate.MainGame;
 
 			break;
 
 			case Gamestate.MainGame:
 
+				Application.LoadLevel(3);
 
-			//StartCoroutine(ChangeScene());
-			Application.LoadLevel(3);
-
-			StartCoroutine(ChangeScene());
-			//Application.LoadLevel(3);
-
-
+				//StartCoroutine(ChangeScene());
 
 			break;
 		}
+	}
+
+	public void LoadUpgradesWindow()
+	{
+		Application.LoadLevelAdditive(4);
 	}
 }
