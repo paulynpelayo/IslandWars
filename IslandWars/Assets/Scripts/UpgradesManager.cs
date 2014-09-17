@@ -322,8 +322,8 @@ public class UpgradesManager : MonoBehaviour {
 		//Save Player Attributes
 		PlayerInfo.getInstance().SaveTowerDefense = curTowerDefense;
 		
-		/*if (Application.loadedLevelName == "prototype")
-			Tower.getInstance().TowerLevel += 1;*/
+		if (Application.loadedLevelName == "prototype")
+			Tower.getInstance().TowerDefense += 1;
 
 	}
 

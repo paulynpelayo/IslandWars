@@ -240,7 +240,8 @@ public class GUIManager : MonoBehaviour
 	
 	public void setLifeBar(int Damage)
 	{
-		lifebar.clipTopRight = new Vector2 (lifebar.clipTopRight.x - (Damage * 0.01f), lifebar.clipTopRight.y);
+		//lifebar.clipTopRight = new Vector2 (lifebar.clipTopRight.x - (Damage * 0.01f), lifebar.clipTopRight.y);
+		lifebar.clipTopRight = new Vector2 ((lifebar.clipTopRight.x) - (Damage *  (Tower.getInstance().MaxLife * 0.0001f)), lifebar.clipTopRight.y);
 	}
 
 	public void displayVictory()
