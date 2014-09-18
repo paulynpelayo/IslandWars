@@ -17,7 +17,7 @@ public class GUIManager : MonoBehaviour
 	public tk2dClippedSprite lifebar;
 	public tk2dSprite MusicMark, SFXMark;
 	public tk2dSprite GameOver, PauseWindow, StoreWindow, OptionsWindow, Victory;
-	public GameObject InGameWindow, UpgradesWindow;
+	public GameObject InGameWindow, UpgradesWindow, AchievementWindow;
 	public tk2dSprite[] CoinsSprite, PFBSprite;
 	public tk2dSlicedSprite StoreButton;
 	public tk2dSlicedSprite[] ItemBtns;
@@ -127,6 +127,17 @@ public class GUIManager : MonoBehaviour
 		}
 	}
 
+	public void ClickedAchievementButton()
+	{
+		if (AchievementWindow != null)
+		{	
+			AchievementWindow.active = true;
+		}
+		else GameManager.getInstance().LoadAchievementWindow();
+
+
+	}
+
 	public void ClickedOptionsButton()
 	{
 		NoPopUpsDisplayed = false;
@@ -143,7 +154,15 @@ public class GUIManager : MonoBehaviour
 
 	public void ClickedBackButton()
 	{
-		OptionsWindow.gameObject.active = false;
+		if (OptionsWindow != null)
+			OptionsWindow.gameObject.active = false;
+
+		if (AchievementWindow == null)
+		{
+			AchievementWindow = GameObject.Find("AchievementWindow");
+			AchievementWindow.gameObject.active = false;
+		}
+		else AchievementWindow.gameObject.active = false;
 
 		if (PauseWindow == null)
 			NoPopUpsDisplayed = true;

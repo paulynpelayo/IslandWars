@@ -114,4 +114,9 @@ public class GameManager : MonoBehaviour {
 	{
 		Application.LoadLevelAdditive(4);
 	}
+
+	public void LoadAchievementWindow()
+	{
+		Application.LoadLevelAdditive(5);
+	}
 }

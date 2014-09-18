@@ -12,7 +12,7 @@ public class UpgradesManager : MonoBehaviour {
 
 	public tk2dSlicedSprite PurchaseButton;
 	public tk2dSprite InfoWindow, Icon;
-	public tk2dTextMesh InfoText, SubInfo, AmountText;
+	public tk2dTextMesh InfoText, SubInfo, InfoTextBack, SubInfoBack,AmountText;
 
 	private int curTowerHeight;
 	private int curTowerDefense;
@@ -269,9 +269,13 @@ public class UpgradesManager : MonoBehaviour {
 		Amount = amount; 
 
 		InfoText.text = Info;
+		InfoTextBack.text = Info;
 		InfoText.Commit();
+		InfoTextBack.Commit();
 		SubInfo.text = Subinfo;
+		SubInfoBack.text = Subinfo;
 		SubInfo.Commit();
+		SubInfoBack.Commit();
 		AmountText.text = Amount.ToString();
 		AmountText.Commit();
 
