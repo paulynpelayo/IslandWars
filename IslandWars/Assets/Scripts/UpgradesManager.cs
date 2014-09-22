@@ -12,7 +12,10 @@ public class UpgradesManager : MonoBehaviour {
 
 	public tk2dSlicedSprite PurchaseButton;
 	public tk2dSprite InfoWindow, Icon;
+<<<<<<< HEAD
 	public tk2dSprite[] BPSprite;
+=======
+>>>>>>> 05c86b6a0fe1f04504a54ab11960a74fd02e14d1
 	public tk2dTextMesh InfoText, SubInfo, InfoTextBack, SubInfoBack,AmountText;
 
 	private int curTowerHeight;

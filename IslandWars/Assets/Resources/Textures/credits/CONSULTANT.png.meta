@@ -1,8 +1,11 @@
 fileFormatVersion: 2
 guid: 98075ad39818d4f2a922604959cf9f6e
 TextureImporter:
+<<<<<<< HEAD
   fileIDToRecycleName:
     21300000: CONSULTANT
+=======
+>>>>>>> 05c86b6a0fe1f04504a54ab11960a74fd02e14d1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,9 +29,15 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
+<<<<<<< HEAD
     aniso: 1
     mipBias: -1
     wrapMode: 1
+=======
+    aniso: -1
+    mipBias: -1
+    wrapMode: -1
+>>>>>>> 05c86b6a0fe1f04504a54ab11960a74fd02e14d1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -37,7 +46,10 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
+<<<<<<< HEAD
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+=======
+>>>>>>> 05c86b6a0fe1f04504a54ab11960a74fd02e14d1
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
