@@ -15,7 +15,7 @@ public class GUIManager : MonoBehaviour
 	}
 	
 	public tk2dClippedSprite lifebar;
-	public tk2dSprite MusicMark, SFXMark;
+	public tk2dSprite MusicMark, SFXMark, PeopleName;
 	public tk2dSprite GameOver, PauseWindow, StoreWindow, OptionsWindow, Victory, StatsWindow;
 	public GameObject InGameWindow, UpgradesWindow, AchievementWindow;
 	public tk2dSprite[] CoinsSprite, BPSprite, VictoryBPSprite, WaveSprite, PFBSprite;
@@ -119,6 +119,8 @@ public class GUIManager : MonoBehaviour
 		
 		int currentWave = LevelManager.getInstance().WaveNum;
 		LevelManager.getInstance().WaveNum = currentWave + 1;
+		UpdateNumber("Wave", WaveSprite);
+
 		StartCoroutine(GUIManager.getInstance().PrepareForBattle());
 		
 	}
@@ -176,6 +178,7 @@ public class GUIManager : MonoBehaviour
 			{
 				case "Archer(Clone)": 
 					level = PlayerInfo.getInstance().SaveArcherUpgrade; 
+					PeopleName.SetSprite(PeopleName.GetSpriteIdByName("archername"));
 					
 					switch (P.CurrentLevel)
 					{
@@ -189,8 +192,9 @@ public class GUIManager : MonoBehaviour
 
 				case "BlowGun(Clone)": 
 					level = PlayerInfo.getInstance().SaveBlowGunUpgrade; 
+					PeopleName.SetSprite(PeopleName.GetSpriteIdByName("blowgunname"));
 					
-					switch (P.CurrentLevel)
+				switch (P.CurrentLevel)
 					{
 					case 1: IconName = "blowpipeup"; break;
 					case 2: IconName = "blowammoup"; break;
@@ -201,7 +205,8 @@ public class GUIManager : MonoBehaviour
 				break;
 
 				case "Slingshot(Clone)": 
-					level = PlayerInfo.getInstance().SaveSlingshotUpgrade; 
+					level = PlayerInfo.getInstance().SaveSlingshotUpgrade;
+					PeopleName.SetSprite(PeopleName.GetSpriteIdByName("slingername"));
 
 					switch (P.CurrentLevel)
 					{
@@ -215,6 +220,7 @@ public class GUIManager : MonoBehaviour
 
 				case "Cannon(Clone)": 
 					level = PlayerInfo.getInstance().SaveCannonUpgrade;
+					PeopleName.SetSprite(PeopleName.GetSpriteIdByName("cannonname"));
 
 					switch (P.CurrentLevel)
 					{
@@ -511,8 +517,7 @@ public class GUIManager : MonoBehaviour
 
 			BravePoints += LevelManager.getInstance().WaveNum;
 			PlayerInfo.getInstance().SaveBravePoint = BravePoints;
-			UpdateNumber("BravePoint", BPSprite);
-			UpdateNumber("Wave", WaveSprite);
+			UpdateNumber("BravePoint", BPSprite);			
 			UpdateNumber("VictoryBP", VictoryBPSprite);
 		//}
 	}
@@ -581,7 +586,7 @@ public class GUIManager : MonoBehaviour
 			break;
 
 			case "Wave":
-				Number = LevelManager.getInstance().WaveNum + 1;
+				Number = LevelManager.getInstance().WaveNum;
 			break;
 		}
 
