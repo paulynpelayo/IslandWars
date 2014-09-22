@@ -65,7 +65,7 @@ public class PlayerInfo : MonoBehaviour {
 			//PlayerPrefs.DeleteAll();
 		#endif
 
-		if (!PlayerPrefs.HasKey("BravePoints")) PlayerPrefs.SetInt("BravePoints", 1000);
+		if (!PlayerPrefs.HasKey("BravePoints")) PlayerPrefs.SetInt("BravePoints", 99);
 		if (!PlayerPrefs.HasKey("TowerHeight")) PlayerPrefs.SetInt("TowerHeight", 1);
 		if (!PlayerPrefs.HasKey("TowerDefense")) PlayerPrefs.SetInt("TowerDefense", 1);
 		if (!PlayerPrefs.HasKey("ArcherUpgrade")) PlayerPrefs.SetInt("ArcherUpgrade", 1);

@@ -55,6 +55,7 @@ public class LevelManager : MonoBehaviour {
 	{
 		Coins = 50;
 		WaveNum = 1;
+		GUIManager.getInstance().UpdateNumber("BravePoint", GUIManager.getInstance().BPSprite);
 		StartCoroutine(GUIManager.getInstance().PrepareForBattle());
 
 		/*
@@ -128,6 +129,7 @@ public class LevelManager : MonoBehaviour {
 		numOfSmasher += 1;
 		numOfSprinter += 2;
 		numOfStandard += 1;
+		SpawnDelay = 2f;
 
 		AddToList("Brute", numOfBrute);
 		AddToList("Smasher", numOfSmasher);

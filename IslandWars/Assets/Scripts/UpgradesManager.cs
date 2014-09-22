@@ -12,7 +12,8 @@ public class UpgradesManager : MonoBehaviour {
 
 	public tk2dSlicedSprite PurchaseButton;
 	public tk2dSprite InfoWindow, Icon;
-	public tk2dTextMesh InfoText, SubInfo, AmountText;
+	public tk2dSprite[] BPSprite;
+	public tk2dTextMesh InfoText, SubInfo, InfoTextBack, SubInfoBack,AmountText;
 
 	private int curTowerHeight;
 	private int curTowerDefense;
@@ -29,7 +30,9 @@ public class UpgradesManager : MonoBehaviour {
 	void Start () {
 
 		GUIManager.getInstance().UpgradesWindow = this.gameObject;
-		BravePoints = PlayerInfo.getInstance().SaveBravePoint;
+		//BravePoints = PlayerInfo.getInstance().SaveBravePoint;
+		UpdateNumofBP();
+
 		curTowerHeight = PlayerInfo.getInstance().SaveTowerHeight;
 		curTowerDefense = PlayerInfo.getInstance().SaveTowerDefense;
 		curArcherUpgrades = PlayerInfo.getInstance().SaveArcherUpgrade;
@@ -48,6 +51,26 @@ public class UpgradesManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+	}
+
+	public void UpdateNumofBP()
+	{				
+		BravePoints = PlayerInfo.getInstance ().SaveBravePoint;
+		//Debug.Log (BravePoints);
+		string BPString = BravePoints.ToString();
+		
+		char[] C = BPString.ToCharArray();
+		
+		for (int x = 0; x < BPSprite.Length; x++)
+		{
+			BPSprite[x].renderer.enabled = false;
+		}
+		
+		for (int x = 0; x < C.Length; x++)
+		{	
+			BPSprite[x].spriteId = BPSprite[x].GetSpriteIdByName(C[x].ToString());
+			BPSprite[x].renderer.enabled = true;
+		}
 	}
 
 	public void DisplayUpgrades(tk2dSlicedSprite[] Item, int currentLvl)
@@ -133,7 +156,7 @@ public class UpgradesManager : MonoBehaviour {
 
 	public void ClickedArcherUpgrades(tk2dUIItem Button)
 	{
-		/*int buttonNum;
+		int buttonNum;
 		
 		int.TryParse(Button.gameObject.name, out buttonNum);
 		
@@ -167,53 +190,144 @@ public class UpgradesManager : MonoBehaviour {
 				break;
 			}
 			
-			int iconID = ArrTowerDefense[buttonNum - 1].spriteId;
+			int iconID = ArrArcherUpgrades[buttonNum - 1].spriteId;
 			Icon.SetSprite(iconID);
 			
-			DisplayInfoWindow("TowerDefense", Info, Subinfo, amount);
-
-		/*if(curArcherUpgrades < 4)
-		{
-			curArcherUpgrades += 1;
+			DisplayInfoWindow("ArcherUpgrade", Info, Subinfo, amount);
 		}
+
+	}
+
+	public void ClickedBlowgunUpgrades(tk2dUIItem Button)
+	{
+		int buttonNum;
 		
-		ArrArcherUpgrades[curArcherUpgrades].color = new Color(1,1,1,1);*/
-	}
-
-	public void ClickedBlowgunUpgrades()
-	{
+		int.TryParse(Button.gameObject.name, out buttonNum);
+		
 		if (NoPopUpsDisplayed)
 		{
-			if(curBlowgunUpgrades < 4)
+			int amount = 0;
+			string Info = "";
+			string Subinfo = "";
+			
+			switch(buttonNum)
 			{
-				curBlowgunUpgrades += 1;
+			case 1: 
+				amount = 10; 
+				Info = "Building Techniques";
+				Subinfo = "+10 Life";
+				break;
+			case 2: 
+				amount = 50;
+				Info = "Hardwood Panels";
+				Subinfo = "+20 Life";
+				break;
+			case 3: 
+				amount = 150;
+				Info = "Stone Defense";
+				Subinfo = "+50 Life";
+				break;
+			case 4: 
+				amount = 300;
+				Info = "Masonry";
+				Subinfo = "+75 Life";
+				break;
 			}
-			ArrBlowgunUpgrades[curBlowgunUpgrades].color = new Color(1,1,1,1);
+			
+			int iconID = ArrBlowgunUpgrades[buttonNum - 1].spriteId;
+			Icon.SetSprite(iconID);
+			
+			DisplayInfoWindow("BlowgunUpgrade", Info, Subinfo, amount);
 		}
+
 	}
 
-	public void ClickedSlingshotUpgrades()
+	public void ClickedSlingshotUpgrades(tk2dUIItem Button)
 	{
+		int buttonNum;
+		
+		int.TryParse(Button.gameObject.name, out buttonNum);
+		
 		if (NoPopUpsDisplayed)
 		{
-			if(curSlingshotUpgrades < 4)
+			int amount = 0;
+			string Info = "";
+			string Subinfo = "";
+			
+			switch(buttonNum)
 			{
-				curSlingshotUpgrades += 1;
+			case 1: 
+				amount = 10; 
+				Info = "Building Techniques";
+				Subinfo = "+10 Life";
+				break;
+			case 2: 
+				amount = 50;
+				Info = "Hardwood Panels";
+				Subinfo = "+20 Life";
+				break;
+			case 3: 
+				amount = 150;
+				Info = "Stone Defense";
+				Subinfo = "+50 Life";
+				break;
+			case 4: 
+				amount = 300;
+				Info = "Masonry";
+				Subinfo = "+75 Life";
+				break;
 			}
-			ArrSlingshotUpgrades[curSlingshotUpgrades].color = new Color(1,1,1,1);
+			
+			int iconID = ArrSlingshotUpgrades[buttonNum - 1].spriteId;
+			Icon.SetSprite(iconID);
+			
+			DisplayInfoWindow("SlingshotUpgrade", Info, Subinfo, amount);
 		}
+
 	}
 
-	public void ClickedCannonUpgrades()
+	public void ClickedCannonUpgrades(tk2dUIItem Button)
 	{
+		int buttonNum;
+		
+		int.TryParse(Button.gameObject.name, out buttonNum);
+		
 		if (NoPopUpsDisplayed)
 		{
-			if(curCannonUpgrades < 4)
+			int amount = 0;
+			string Info = "";
+			string Subinfo = "";
+			
+			switch(buttonNum)
 			{
-				curCannonUpgrades += 1;
+			case 1: 
+				amount = 10; 
+				Info = "Building Techniques";
+				Subinfo = "+10 Life";
+				break;
+			case 2: 
+				amount = 50;
+				Info = "Hardwood Panels";
+				Subinfo = "+20 Life";
+				break;
+			case 3: 
+				amount = 150;
+				Info = "Stone Defense";
+				Subinfo = "+50 Life";
+				break;
+			case 4: 
+				amount = 300;
+				Info = "Masonry";
+				Subinfo = "+75 Life";
+				break;
 			}
-			ArrCannonUpgrades[curCannonUpgrades].color = new Color(1,1,1,1);
+			
+			int iconID = ArrCannonUpgrades[buttonNum - 1].spriteId;
+			Icon.SetSprite(iconID);
+			
+			DisplayInfoWindow("CannonUpgrade", Info, Subinfo, amount);
 		}
+
 	}
 
 	public void ClickedBackButton()
@@ -253,6 +367,7 @@ public class UpgradesManager : MonoBehaviour {
 
 			BravePoints -= Amount;
 			PlayerInfo.getInstance().SaveBravePoint = BravePoints;
+			UpdateNumofBP();
 			Amount = 100000;
 			ButtonClicked = null;
 
@@ -269,9 +384,13 @@ public class UpgradesManager : MonoBehaviour {
 		Amount = amount; 
 
 		InfoText.text = Info;
+		InfoTextBack.text = Info;
 		InfoText.Commit();
+		InfoTextBack.Commit();
 		SubInfo.text = Subinfo;
+		SubInfoBack.text = Subinfo;
 		SubInfo.Commit();
+		SubInfoBack.Commit();
 		AmountText.text = Amount.ToString();
 		AmountText.Commit();
 
@@ -329,21 +448,53 @@ public class UpgradesManager : MonoBehaviour {
 
 	public void UpgradeArcherUpgrades()
 	{
+		if(curArcherUpgrades < 4)
+		{
+			ArrArcherUpgrades[curArcherUpgrades].color = new Color(1,1,1,1);
+			curArcherUpgrades += 1;
+		}
+		else curArcherUpgrades = 4;
+
+		PlayerInfo.getInstance().SaveArcherUpgrade = curArcherUpgrades;
 
 	}
 
 	public void UpgradeBlowgunUpgrades()
 	{
-		
+		if(curBlowgunUpgrades < 4)
+		{
+			ArrBlowgunUpgrades[curBlowgunUpgrades].color = new Color(1,1,1,1);
+			curBlowgunUpgrades += 1;
+		}
+		else curBlowgunUpgrades = 4;
+
+		PlayerInfo.getInstance().SaveBlowGunUpgrade = curBlowgunUpgrades;
+			
 	}
 
 	public void UpgradeSlingshotUpgrades()
 	{
-		
+		if(curSlingshotUpgrades < 4)
+		{
+			ArrSlingshotUpgrades[curSlingshotUpgrades].color = new Color(1,1,1,1);
+			curSlingshotUpgrades += 1;
+		}
+		else curSlingshotUpgrades = 4;
+
+		PlayerInfo.getInstance().SaveSlingshotUpgrade = curSlingshotUpgrades;
+
 	}
 
 	public void UpgradeCannonUpgrades()
 	{
-		
+		if(curCannonUpgrades < 4)
+		{
+			ArrCannonUpgrades[curCannonUpgrades].color = new Color(1,1,1,1);
+			curCannonUpgrades += 1;
+		}
+		else curCannonUpgrades = 4;
+
+		PlayerInfo.getInstance().SaveCannonUpgrade = curCannonUpgrades;
+
 	}
 }

@@ -14,7 +14,7 @@ public class ScrollingScript : MonoBehaviour
 
 	IEnumerator ChangeScene()
 	{
-		yield return new WaitForSeconds(3f);
+		yield return new WaitForSeconds(5f);
 		AsyncOperation Async  = Application.LoadLevelAsync("prototype");
 		while(!Async.isDone)
 		{

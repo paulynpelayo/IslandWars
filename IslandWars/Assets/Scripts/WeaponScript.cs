@@ -5,7 +5,8 @@ public class WeaponScript : MonoBehaviour {
 
 	private TrajectoryHelper Helper;
 	public int Damage;
-	public int Cost;
+	private int UpgradeDamage = 0;
+	//public int Cost;
 	private GameObject Target;
 
 	void Start()
@@ -29,12 +30,17 @@ public class WeaponScript : MonoBehaviour {
 		Target = target;
 	}
 
+	public void setUpgradeDamage (int upgradeDamage)
+	{
+		UpgradeDamage = upgradeDamage;
+	}
+
 	void OnTriggerEnter (Collider other)
 	{	
 		if (other.tag == "Target" && other.gameObject == Target)
 		{				
 			EnemyScript E = other.GetComponent<EnemyScript>();
-			E.GotDamage(Damage);	
+			E.GotDamage(Damage + UpgradeDamage);	
 
 			Destroy (gameObject);
 			

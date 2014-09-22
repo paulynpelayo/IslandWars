@@ -29,8 +29,8 @@ public class EnemyScript : MonoBehaviour {
 	#region tk2d
 	
 	private tk2dSprite EnemySprite;
-	private tk2dSpriteAnimator EnemyAnimator;
-	
+	private tk2dSpriteAnimator EnemyAnimator, BlastAnim;
+		
 	#endregion
 
 	#region attributes
@@ -45,12 +45,16 @@ public class EnemyScript : MonoBehaviour {
 
 	private TransformPool Pool;
 	private Transform TargetPoint;
+	private bool isBlasting = false;
 	//private TargetList List;
 
 	// Use this for initialization
 	void Start () {
 		EnemySprite = gameObject.GetComponent<tk2dSprite>();
 		EnemyAnimator = gameObject.GetComponent<tk2dSpriteAnimator>();
+		//BlastAnim = gameObject.GetComponentInChildren<tk2dSpriteAnimator>();
+		BlastAnim = transform.FindChild ("Blast").GetComponent<tk2dSpriteAnimator>();
+		//Debug.Log(BlastAnim);
 
 	}
 	
@@ -58,6 +62,15 @@ public class EnemyScript : MonoBehaviour {
 	void Update () {
 
 		ChangeState();
+
+		if (isBlasting)
+		{
+			BlastAnim.gameObject.renderer.enabled = true;
+			BlastAnim.gameObject.active = true;
+			BlastAnim.Play();
+
+			BlastAnim.AnimationCompleted = BlastDelegate;	
+		}
 	}
 
 	void DieCompleteDelegate (tk2dSpriteAnimator sprite, tk2dSpriteAnimationClip clip)
@@ -78,6 +91,13 @@ public class EnemyScript : MonoBehaviour {
 	void AttackDelegate (tk2dSpriteAnimator sprite, tk2dSpriteAnimationClip clip)
 	{
 		Tower.getInstance().setDamage(Damage);
+	}
+
+	void BlastDelegate (tk2dSpriteAnimator sprite, tk2dSpriteAnimationClip clip)
+	{
+		isBlasting = false;
+		BlastAnim.gameObject.renderer.enabled = false;
+		BlastAnim.gameObject.active = false;
 	}
 
 	void ChangeState()
@@ -132,9 +152,9 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	public void GotDamage (int damage)
-	{
+	{	
 		Life -= damage;
-
+		isBlasting = true;
 		if (Life <= 0)
 			enemystate = Enemystate.Dying;
 	}

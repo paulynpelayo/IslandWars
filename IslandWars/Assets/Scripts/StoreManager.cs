@@ -37,7 +37,8 @@ public class StoreManager : MonoBehaviour {
 		//if (CoinsAvailable >= Cost[item])
 		//{
 			int Cost =  People[item].GetComponent<PeopleScript>().Cost;
-			LevelManager.getInstance().NumOfCoins -= Cost;
+			CoinsAvailable -= Cost;
+			LevelManager.getInstance().NumOfCoins = CoinsAvailable;
 			//Debug.Log("Item " + People[item].gameObject.name + " bought");
 			//Debug.Log("number of Coins remaining: " + LevelManager.getInstance().NumOfCoins);
 
@@ -61,5 +62,18 @@ public class StoreManager : MonoBehaviour {
 		}
 
 		return isAvailable;
+	}
+
+	public bool CanUpgrade(int Cost)
+	{
+		CoinsAvailable = LevelManager.getInstance().NumOfCoins;
+		if (CoinsAvailable >= Cost) return true;
+		else return false;
+	}
+
+	public void UpgradingPerson(int Cost)
+	{
+		CoinsAvailable -= Cost;
+		LevelManager.getInstance().NumOfCoins = CoinsAvailable;
 	}
 }

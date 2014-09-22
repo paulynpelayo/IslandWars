@@ -64,8 +64,8 @@ public class TransformPool : MonoBehaviour {
 	
 	private void Activate(Transform transform)
 	{
-		foreach (Transform child in transform)
-			Activate(child);
+		//foreach (Transform child in transform)
+			//Activate(child);
 		
 		transform.gameObject.active = true;
 		if (transform.renderer != null)

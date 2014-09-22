@@ -32,13 +32,29 @@ public class PeopleScript : MonoBehaviour {
 
 	#endregion
 
-	private TargetList ListOfTarget;
+	private string Attack = "Nearest";
+	public string AttackState
+	{
+		get { return Attack; }
+		set { Attack = value; }
+	}
+
+	public int Level = 1;
+	public int CurrentLevel
+	{
+		get { return Level; }
+		set { Level = value; }
+	}
+
+	public TargetList ListOfTarget;
 	private GameObject Target;
 	private TrajectoryHelper Helper;
 	private bool CanShoot = true;
 	private Transform WeaponPoint;
 	public Transform WeaponPrefab;
 	public int Cost;
+	public int UpgradeDamage;
+	public Material Outline;
 
 	// Use this for initialization
 	void Start () {
@@ -55,7 +71,6 @@ public class PeopleScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		ChangeState();
 	}
 
@@ -75,9 +90,9 @@ public class PeopleScript : MonoBehaviour {
 				PlayerAnimator.Stop();
 				PlayerSprite.SetSprite(PlayerSprite.Collection.Count);
 							          
-				if (transform.position.x != 0)
+				if (transform.position.x < -0.3 || transform.position.x > 0.3)
 				{	
-					Target = ListOfTarget.getNearestEnemy();
+					Target = ListOfTarget.GetEnemy(Attack);
 					
 					if (Target != null)
 						playerstate = Playerstate.Shooting;			
@@ -88,7 +103,7 @@ public class PeopleScript : MonoBehaviour {
 
 			case Playerstate.Shooting: 
 				
-				Target = ListOfTarget.getNearestEnemy();
+				Target = ListOfTarget.GetEnemy(Attack);
 				
 				if (Target == null)
 					playerstate = Playerstate.Idle;
@@ -120,7 +135,7 @@ public class PeopleScript : MonoBehaviour {
 							Weapon.rigidbody.velocity = Velocity;
 
 							Weapon.GetComponent<WeaponScript>().setTarget(Target);
-							
+							Weapon.GetComponent<WeaponScript>().setUpgradeDamage(UpgradeDamage);
 							CanShoot = true;
 						}						
 					
@@ -152,7 +167,7 @@ public class PeopleScript : MonoBehaviour {
 		string targetName = gameObject.name;
 		Vector2 Scale;
 
-		if (transform.position.x > 0)
+		if (transform.position.x > 0.3)
 		{
 			if (targetName.IndexOf("BlowGun") > -1)
 				ListOfTarget = GameObject.Find("BlowGun_RBox").GetComponent<TargetList>();
@@ -166,7 +181,7 @@ public class PeopleScript : MonoBehaviour {
 			Scale = new Vector2 (1, 1);
 			transform.localScale = Scale;
 		}
-		else if (transform.position.x < 0)
+		else if (transform.position.x < 0.3)
 		{
 			if (targetName.IndexOf("BlowGun") > -1)
 				ListOfTarget = GameObject.Find("BlowGun_LBox").GetComponent<TargetList>();

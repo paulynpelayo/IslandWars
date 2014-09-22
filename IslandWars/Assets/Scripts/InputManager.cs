@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour {
 	private bool clicked = false;
 	private Vector2 Scale;
 
+	private Transform CurrentlySelected;
 
 	#region singleton
 	
@@ -36,7 +37,18 @@ public class InputManager : MonoBehaviour {
 			player = RaycastedObject();
 			Debug.Log(player);
 			if (player != null && player.tag == "Player")
+			{
 				clicked = true;
+				CurrentlySelected = player.transform;
+				GUIManager.getInstance().HideStoreWindow();
+				GUIManager.getInstance().DisplayStatsButton();
+			}
+			else if (player == null)
+			{
+				CurrentlySelected = null;
+				GUIManager.getInstance().HideStatsBUtton();
+				GUIManager.getInstance().HideStoreWindow();
+			}
 		}
 
 		if (clicked)
@@ -71,5 +83,10 @@ public class InputManager : MonoBehaviour {
 			return hit.transform.gameObject;			
 		else return null;
 
+	}
+
+	public Transform getCurrentlySelected()
+	{
+		return CurrentlySelected;
 	}
 }

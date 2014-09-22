@@ -60,7 +60,7 @@ public class Tower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 	
 	public void setDamage (int damage)
@@ -98,6 +98,7 @@ public class Tower : MonoBehaviour {
 		LifeBar.scale = Scale;
 
 		MaxLife += 25;
+		Life += 25;
 
 		int spriteNum = 0;
 
