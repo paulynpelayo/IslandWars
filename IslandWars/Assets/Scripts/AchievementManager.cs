@@ -4,6 +4,7 @@ using System.Collections;
 public class AchievementManager : MonoBehaviour {
 
 	public bool achieve = false;
+	private bool NoPopUpsDisplayed = true;
 
 	// Use this for initialization
 	void Start () {
@@ -49,5 +50,21 @@ public class AchievementManager : MonoBehaviour {
 			}
 		}
 
+
 }
+	public void ClickedBackButton()
+	{
+		if (NoPopUpsDisplayed)
+		{
+			this.gameObject.active = false;
+			
+			//if (GameManager.getInstance().gameState == GameManager.Gamestate.MainMenu)
+			if (Application.loadedLevelName == "prototype")
+			{
+				GUIManager.getInstance().InGameWindow.active = true;
+				GUIManager.getInstance().displayVictory();
+			}
+		}
+	}
+
 }

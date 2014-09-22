@@ -35,6 +35,7 @@ public class WeaponScript : MonoBehaviour {
 		UpgradeDamage = upgradeDamage;
 	}
 
+	//OnHit
 	void OnTriggerEnter (Collider other)
 	{	
 		if (other.tag == "Target" && other.gameObject == Target)
