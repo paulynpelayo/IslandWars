@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour {
 
 	IEnumerator WaitToChangeScene()
 	{
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(3f);
 		gameState = Gamestate.MainMenu;
 	}
 
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour {
 			BG.position = new Vector3(BG.position.x, 14f - (28f * Async.progress),0);
 			//yield return null;
 		}
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(3f);
 	
 	}
 
@@ -118,5 +118,10 @@ public class GameManager : MonoBehaviour {
 	public void LoadAchievementWindow()
 	{
 		Application.LoadLevelAdditive(5);
+	}
+
+	public void LoadCreditsWindow()
+	{
+		Application.LoadLevelAdditive(6);
 	}
 }

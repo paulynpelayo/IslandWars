@@ -10,11 +10,13 @@ public class ScrollingScript : MonoBehaviour
 	public Vector2 direction = new Vector2(-1, 0);
 	public bool isLooping = false;
 
+
+
 	private List<Transform> backgroundPart;
 
 	IEnumerator ChangeScene()
 	{
-		yield return new WaitForSeconds(5f);
+		yield return new WaitForSeconds(3f);
 		AsyncOperation Async  = Application.LoadLevelAsync("prototype");
 		while(!Async.isDone)
 		{
@@ -84,5 +86,7 @@ public class ScrollingScript : MonoBehaviour
 				}
 			}
 		}
+
 	}
+
 }

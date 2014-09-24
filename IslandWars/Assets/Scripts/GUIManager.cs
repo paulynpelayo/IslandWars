@@ -17,7 +17,7 @@ public class GUIManager : MonoBehaviour
 	public tk2dClippedSprite lifebar;
 	public tk2dSprite MusicMark, SFXMark, PeopleName;
 	public tk2dSprite GameOver, PauseWindow, StoreWindow, OptionsWindow, Victory, StatsWindow;
-	public GameObject InGameWindow, UpgradesWindow, AchievementWindow;
+	public GameObject InGameWindow, UpgradesWindow, AchievementWindow, CreditsWindow;
 	public tk2dSprite[] CoinsSprite, BPSprite, VictoryBPSprite, WaveSprite, PFBSprite;
 	public tk2dSlicedSprite StoreButton;
 	public tk2dSlicedSprite[] ItemBtns, AttackSprites;
@@ -70,7 +70,11 @@ public class GUIManager : MonoBehaviour
 
 	public void ClickedCreditsButton()
 	{
-		//if (NoPopUpsDisplayed)
+		if (CreditsWindow != null)
+		{	
+			CreditsWindow.active = true;
+		}
+		else GameManager.getInstance().LoadCreditsWindow();
 	}
 	
 	public void ClickedPauseButton()

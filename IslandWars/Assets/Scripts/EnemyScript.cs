@@ -35,7 +35,7 @@ public class EnemyScript : MonoBehaviour {
 
 	#region attributes
 
-	public int Life;
+	public int Life = 3;
 	public float Speed;
 	public int Damage;
 	public int Strength;
@@ -163,9 +163,12 @@ public class EnemyScript : MonoBehaviour {
 	{	
 		Life -= damage;
 		isBlasting = true;
+
 		if (Life <= 0)
-			audio.PlayOneShot(DyingSound);
+		{
 			enemystate = Enemystate.Dying;
+			audio.PlayOneShot(DyingSound);
+		}
 	}
 	/*
 	void OnTriggerEnter (Collider other)
