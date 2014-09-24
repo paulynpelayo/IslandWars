@@ -45,6 +45,8 @@ public class Tower : MonoBehaviour {
 
 	public int MaxLife = 100;
 	private int Life = 100;
+
+	public AudioClip DestroySound;
 	
 	// Use this for initialization
 	void Start () {
@@ -66,6 +68,8 @@ public class Tower : MonoBehaviour {
 	public void setDamage (int damage)
 	{
 		Life -= damage; 
+
+		audio.PlayOneShot(DestroySound);
 		
 		if (Life  > 0)
 			GUIManager.getInstance().setLifeBar(damage);

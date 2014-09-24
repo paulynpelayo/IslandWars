@@ -170,23 +170,23 @@ public class UpgradesManager : MonoBehaviour {
 			{
 			case 1: 
 				amount = 10; 
-				Info = "Building Techniques";
-				Subinfo = "+10 Life";
+				Info = "Longbow";
+				Subinfo = "+5 Range";
 				break;
 			case 2: 
 				amount = 50;
-				Info = "Hardwood Panels";
-				Subinfo = "+20 Life";
+				Info = "Bodkin Tip";
+				Subinfo = "+1 Damage";
 				break;
 			case 3: 
 				amount = 150;
-				Info = "Stone Defense";
-				Subinfo = "+50 Life";
+				Info = "Broadhead Tip";
+				Subinfo = "+1 Damage";
 				break;
 			case 4: 
 				amount = 300;
-				Info = "Masonry";
-				Subinfo = "+75 Life";
+				Info = "Archery Practice";
+				Subinfo = "+1 Rate of Fire";
 				break;
 			}
 			
@@ -214,23 +214,23 @@ public class UpgradesManager : MonoBehaviour {
 			{
 			case 1: 
 				amount = 10; 
-				Info = "Building Techniques";
-				Subinfo = "+10 Life";
+				Info = "Longer Blowpipe";
+				Subinfo = "Range";
 				break;
 			case 2: 
 				amount = 50;
-				Info = "Hardwood Panels";
-				Subinfo = "+20 Life";
+				Info = "Special Dart";
+				Subinfo = "Damage";
 				break;
 			case 3: 
 				amount = 150;
-				Info = "Stone Defense";
-				Subinfo = "+50 Life";
+				Info = "Venum";
+				Subinfo = "Damage";
 				break;
 			case 4: 
 				amount = 300;
-				Info = "Masonry";
-				Subinfo = "+75 Life";
+				Info = "Poison";
+				Subinfo = "Damage";
 				break;
 			}
 			
@@ -258,23 +258,23 @@ public class UpgradesManager : MonoBehaviour {
 			{
 			case 1: 
 				amount = 10; 
-				Info = "Building Techniques";
-				Subinfo = "+10 Life";
+				Info = "Heavyband";
+				Subinfo = "Range";
 				break;
 			case 2: 
 				amount = 50;
-				Info = "Hardwood Panels";
-				Subinfo = "+20 Life";
+				Info = "Armbrace";
+				Subinfo = "Damage";
 				break;
 			case 3: 
 				amount = 150;
-				Info = "Stone Defense";
-				Subinfo = "+50 Life";
+				Info = "Larger Projectile";
+				Subinfo = "Damage";
 				break;
 			case 4: 
 				amount = 300;
-				Info = "Masonry";
-				Subinfo = "+75 Life";
+				Info = "Sling Pratice";
+				Subinfo = "Rate of Fire";
 				break;
 			}
 			
@@ -302,23 +302,23 @@ public class UpgradesManager : MonoBehaviour {
 			{
 			case 1: 
 				amount = 10; 
-				Info = "Building Techniques";
-				Subinfo = "+10 Life";
+				Info = "Gunpowder";
+				Subinfo = "Range";
 				break;
 			case 2: 
 				amount = 50;
-				Info = "Hardwood Panels";
-				Subinfo = "+20 Life";
+				Info = "Metal Cannonballs";
+				Subinfo = "Damage";
 				break;
 			case 3: 
 				amount = 150;
-				Info = "Stone Defense";
-				Subinfo = "+50 Life";
+				Info = "Exploding Shells";
+				Subinfo = "Damage";
 				break;
 			case 4: 
 				amount = 300;
-				Info = "Masonry";
-				Subinfo = "+75 Life";
+				Info = "Blast Radius";
+				Subinfo = "Damage";
 				break;
 			}
 			

@@ -46,6 +46,8 @@ public class EnemyScript : MonoBehaviour {
 	private TransformPool Pool;
 	private Transform TargetPoint;
 	private bool isBlasting = false;
+
+	public AudioClip AttackSound, DyingSound;
 	//private TargetList List;
 
 	// Use this for initialization
@@ -91,6 +93,7 @@ public class EnemyScript : MonoBehaviour {
 	void AttackDelegate (tk2dSpriteAnimator sprite, tk2dSpriteAnimationClip clip)
 	{
 		Tower.getInstance().setDamage(Damage);
+		audio.PlayOneShot(AttackSound);	
 	}
 
 	void BlastDelegate (tk2dSpriteAnimator sprite, tk2dSpriteAnimationClip clip)
@@ -125,14 +128,18 @@ public class EnemyScript : MonoBehaviour {
 			case Enemystate.Attacking:
 
 				if (EnemyAnimator.GetClipByName("Attack") != null)
+					
 					EnemyAnimator.Play("Attack");
 				
-				EnemyAnimator.AnimationCompleted = AttackDelegate;				
+				
+				EnemyAnimator.AnimationCompleted = AttackDelegate;
+
 						
 			break;
 
 			case Enemystate.Dying:
 				
+					
 				EnemyAnimator.Play("Die");				
 				EnemyAnimator.AnimationCompleted = DieCompleteDelegate;
 
@@ -149,6 +156,7 @@ public class EnemyScript : MonoBehaviour {
 	public void SetTarget (Transform targetPos)
 	{
 		TargetPoint = targetPos;
+
 	}
 
 	public void GotDamage (int damage)
@@ -156,6 +164,7 @@ public class EnemyScript : MonoBehaviour {
 		Life -= damage;
 		isBlasting = true;
 		if (Life <= 0)
+			audio.PlayOneShot(DyingSound);
 			enemystate = Enemystate.Dying;
 	}
 	/*

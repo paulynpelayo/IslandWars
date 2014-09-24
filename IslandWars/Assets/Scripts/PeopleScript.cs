@@ -56,6 +56,8 @@ public class PeopleScript : MonoBehaviour {
 	public int UpgradeDamage;
 	public Material Outline;
 
+	public AudioClip AttackSound;
+
 	// Use this for initialization
 	void Start () {
 
@@ -104,6 +106,7 @@ public class PeopleScript : MonoBehaviour {
 			case Playerstate.Shooting: 
 				
 				Target = ListOfTarget.GetEnemy(Attack);
+
 				
 				if (Target == null)
 					playerstate = Playerstate.Idle;
@@ -113,9 +116,13 @@ public class PeopleScript : MonoBehaviour {
 					{	
 						PlayerAnimator.Play("Attack");					
 						PlayerAnimator.AnimationCompleted = ShootComplete;
+
 					}
 					else
-				  	{		
+				  	{	
+						//play SFX
+						audio.PlayOneShot(AttackSound);	
+
 						float EnemySpeed = Target.GetComponent<EnemyScript>().Speed;
 						
 						Transform Weapon = Instantiate(WeaponPrefab) as Transform;					
@@ -127,7 +134,9 @@ public class PeopleScript : MonoBehaviour {
 						Weapon.eulerAngles = Rotation;
 											
 						Vector3 Velocity = Helper.GetVelocityWithAngleAndTarget(WeaponPoint, Target.transform.position,  EnemySpeed, Weapon.eulerAngles.z) * transform.localScale.x;
-					
+
+						
+
 						//Weapon.rigidbody.velocity = Helper.GetVelocityWithAngleAndTarget(WeaponPoint, Target.transform.position,  EnemySpeed, Weapon.eulerAngles.z) * transform.localScale.x;
 
 						if (!float.IsNaN(Velocity.x) && !float.IsNaN(Velocity.y) && !float.IsNaN(Velocity.z))
@@ -136,7 +145,10 @@ public class PeopleScript : MonoBehaviour {
 
 							Weapon.GetComponent<WeaponScript>().setTarget(Target);
 							Weapon.GetComponent<WeaponScript>().setUpgradeDamage(UpgradeDamage);
+							
 							CanShoot = true;
+
+
 						}						
 					
 					}
